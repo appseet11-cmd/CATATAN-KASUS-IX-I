@@ -6,14 +6,14 @@
 <title>Format Catatan Kasus/Anekdot Bimbingan Konseling SMP 56</title>
 <style>
 :root {
---primary-color: #2c3e50;
---secondary-color: #3498db;
---accent-color: #27ae60;
---background-color: #f4f7f9;
---card-bg-color: #ffffff;
---text-color: #333333;
---border-color: #dcdfe6;
---hover-color: #eaf2f8;
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --accent-color: #27ae60;
+  --background-color: #f4f7f9;
+  --card-bg-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #dcdfe6;
+  --hover-color: #eaf2f8;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: var(--text-color); background-color: var(--background-color); padding: 20px; }
@@ -41,17 +41,8 @@ h1 { font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
 .save-button:hover { background-color: #d35400; }
 .gurubk-button { background: linear-gradient(135deg, #16a085, #1abc9c); color: white; padding: 0.7rem 1.3rem; gap: 6px; }
 .gurubk-button:hover { background: linear-gradient(135deg, #138a72, #16a085); }
-.home-button {
-background: linear-gradient(135deg, #667eea, #764ba2);
-color: white;
-padding: 0.7rem 1.3rem;
-gap: 6px;
-margin-right: auto;
-}
-.home-button:hover {
-background: linear-gradient(135deg, #5568d3, #653a8a);
-transform: translateY(-2px);
-}
+.home-button { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.7rem 1.3rem; gap: 6px; margin-right: auto; }
+.home-button:hover { background: linear-gradient(135deg, #5568d3, #653a8a); transform: translateY(-2px); }
 .gurubk-panel { display: none; background: linear-gradient(135deg, #ecf0f1, #ffffff); border: 2px solid #16a085; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(22, 160, 133, 0.15); }
 .gurubk-panel.active { display: block; }
 .gurubk-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 2px solid #16a085; }
@@ -82,6 +73,108 @@ transform: translateY(-2px);
 .logo-status { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
 .logo-status.saved { background: #d4edda; color: #155724; }
 .logo-status.empty { background: #f8d7da; color: #721c24; }
+
+/* ⭐ FITUR: Edit & Hapus Kasus */
+.edit-case-manager { background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+.edit-case-manager h4 { color: #16a085; margin-bottom: 0.8rem; font-size: 1rem; display: flex; align-items: center; gap: 6px; }
+.edit-case-search { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; padding: 10px; background: #f8fafc; border-radius: 6px; margin-bottom: 10px; }
+.edit-case-search .edit-field { flex: 1; min-width: 220px; }
+.edit-case-search label { display: block; font-weight: 600; color: var(--primary-color); margin-bottom: 4px; font-size: 0.9rem; }
+.edit-case-search input { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.9rem; }
+.edit-case-search input:focus { outline: none; border-color: #16a085; box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.15); }
+
+/* ⭐ Item kasus dengan tombol Edit & Hapus */
+.edit-match-item {
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.edit-match-item:hover { background: #eaf2f8; border-color: #16a085; }
+.edit-match-item.duplicate {
+  background: #fff3cd;
+  border-color: #f1c40f;
+  border-left: 4px solid #f1c40f;
+}
+.edit-match-content { flex: 1; cursor: pointer; min-width: 200px; }
+.edit-match-content:hover { opacity: 0.85; }
+.edit-match-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.btn-match-edit {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.btn-match-edit:hover { background: #2980b9; }
+.btn-match-delete {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.btn-match-delete:hover { background: #c0392b; }
+.duplicate-badge {
+  display: inline-block;
+  background: #f39c12;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.duplicate-warning-box {
+  padding: 12px 16px;
+  background: #fff3cd;
+  border: 1px solid #f1c40f;
+  border-left: 4px solid #f1c40f;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  color: #856404;
+}
+.duplicate-warning-box strong { color: #856404; }
+.duplicate-warning-box ul { margin-top: 8px; padding-left: 1.2rem; }
+.duplicate-warning-box li { margin-bottom: 4px; }
+
+.edit-form-container { background: #eaf2f8; border: 2px solid #3498db; border-radius: 8px; padding: 1.2rem; margin-top: 10px; }
+.edit-form-container h5 { color: #2c3e50; margin-bottom: 6px; font-size: 1.05rem; }
+.edit-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+.edit-form-grid .edit-field-full { grid-column: 1 / -1; }
+.edit-form-grid label { display: block; font-weight: 600; color: var(--primary-color); margin-bottom: 4px; font-size: 0.85rem; }
+.edit-form-grid input, .edit-form-grid select, .edit-form-grid textarea { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; font-size: 0.9rem; }
+.edit-form-grid textarea { resize: vertical; min-height: 60px; }
+.edit-form-grid input:focus, .edit-form-grid select:focus, .edit-form-grid textarea:focus { outline: none; border-color: #3498db; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15); }
+.edit-form-actions { display: flex; gap: 10px; margin-top: 15px; justify-content: flex-end; flex-wrap: wrap; }
+.edit-form-actions button { padding: 0.6rem 1.2rem; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+.btn-edit-cancel { background: #95a5a6; color: white; }
+.btn-edit-cancel:hover { background: #7f8c8d; }
+.btn-edit-save { background: #27ae60; color: white; }
+.btn-edit-save:hover { background: #219150; }
+.edit-success-box { padding: 1rem; background: #d4edda; border-radius: 6px; color: #155724; margin-top: 10px; }
+.edit-success-box a { color: #155724; font-weight: 600; text-decoration: underline; }
+.edit-error-box { padding: 1rem; background: #f8d7da; border-radius: 6px; color: #721c24; margin-top: 10px; }
+.edit-info-box { padding: 1rem; background: #fff3cd; border-radius: 6px; color: #856404; margin-top: 10px; }
+.student-summary-box { padding: 12px 16px; background: #d1ecf1; border: 1px solid #0c5460; border-radius: 6px; margin-bottom: 12px; color: #0c5460; }
+.student-summary-box strong { color: #0c5460; }
+
 .pdf-viewer-container { display: none; background: white; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; margin-top: 1rem; }
 .pdf-viewer-container.active { display: block; }
 .pdf-viewer-header { background: #16a085; color: white; padding: 0.8rem 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
@@ -151,694 +244,780 @@ textarea { resize: vertical; min-height: 60px; }
 .status-toast.info { background: #3498db; }
 footer { text-align: center; padding: 1.5rem; color: #7f8c8d; font-size: 0.9rem; border-top: 1px solid var(--border-color); margin-top: 1rem; }
 @media (max-width: 768px) {
-.toolbar { flex-direction: column; align-items: stretch; }
-.save-button { margin-left: 0; }
-.add-row-button, .remove-row-button, .reset-button { align-self: flex-start; width: 60px; height: 60px; }
-.home-button { margin-right: 0; width: 100%; }
-h1 { font-size: 1.8rem; }
-.gurubk-controls { flex-direction: column; }
-.pdf-viewer-header { flex-direction: column; align-items: flex-start; }
-#pdfViewer { height: 500px; }
-.whiteboard-modal { width: 95%; }
-.logo-row { flex-direction: column; align-items: stretch; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .save-button { margin-left: 0; }
+  .add-row-button, .remove-row-button, .reset-button { align-self: flex-start; width: 60px; height: 60px; }
+  .home-button { margin-right: 0; width: 100%; }
+  h1 { font-size: 1.8rem; }
+  .gurubk-controls { flex-direction: column; }
+  .pdf-viewer-header { flex-direction: column; align-items: flex-start; }
+  #pdfViewer { height: 500px; }
+  .whiteboard-modal { width: 95%; }
+  .logo-row { flex-direction: column; align-items: stretch; }
+  .edit-case-search { flex-direction: column; }
+  .edit-form-grid { grid-template-columns: 1fr; }
+  .edit-match-item { flex-direction: column; align-items: stretch; }
+  .edit-match-actions { justify-content: flex-end; }
 }
 </style>
 </head>
 <body>
 <div class="container">
-<header>
-<h1>Format Catatan Kasus/Anekdot</h1>
-<p class="subtitle">Bimbingan Konseling SMP 56</p>
-</header>
-<div class="info-box rule-new">
-<p><strong>📌 Aturan Sistem — Satu Laporan PDF per Siswa + Arsip Otomatis:</strong></p>
-<ul>
-<li>Setiap siswa (berdasarkan NIS/NISN) hanya memiliki <strong>SATU file PDF rekap</strong> yang berisi seluruh kasusnya.</li>
-<li><strong>NIS dan NISN:</strong> Diisi terpisah. NIS/NISN sebagai kunci unik untuk mengidentifikasi siswa.</li>
-<li><strong>Nama Siswa & Orang Tua:</strong> Menggunakan data yang PERTAMA KALI diinput.</li>
-<li><strong>Baris:</strong> Gunakan tombol <strong>(+)</strong> untuk menambah baris, <strong>(-)</strong> untuk menghapus baris terakhir, dan <strong>🔄</strong> untuk mereset semua isian tabel.</li>
-<li><strong>Kelas:</strong> Pilih kelas siswa dari menu dropdown (VII-A s.d. VII-J).</li>
-<li><strong>💾 Simpan ke Spreadsheet:</strong> Data akan terakumulasi. Reset tabel TIDAK menghapus data di Spreadsheet.</li>
-<li><strong>🔑 Password Guru BK:</strong> Bisa diedit langsung di Spreadsheet → sheet <strong>"Pengaturan"</strong> → baris <strong>"passwordGuruBK"</strong> → edit kolom B.</li>
-<li><strong>🖼️ Logo:</strong> Upload logo sekali via panel Guru BK → logo tersimpan permanen di Spreadsheet & otomatis dipakai setiap generate PDF.</li>
-<li><strong>🏠 Tombol Kembali:</strong> Gunakan tombol <strong>"🏠 Kembali"</strong> di toolbar untuk kembali ke halaman induk.</li>
-</ul>
-</div>
-<div class="toolbar">
-<button class="home-button" title="Kembali ke Halaman Induk" onclick="goBackHome()">🏠 Kembali</button>
-<button class="add-row-button" title="Tambah Baris Data" onclick="addRow()">+</button>
-<button class="remove-row-button" title="Hapus Baris Terakhir" onclick="removeRow()">-</button>
-<button class="reset-button" title="Reset Semua Isian Tabel" onclick="resetTable()">🔄</button>
-<button class="gurubk-button" title="Mode Guru BK - Lihat Rekap PDF Siswa" onclick="openGuruBKLogin()">👨‍🏫 Guru BK</button>
-<button class="nav-button save-button" onclick="saveData()">💾 Simpan ke Spreadsheet</button>
-</div>
-<div class="gurubk-panel" id="gurubkPanel">
-<div class="gurubk-header">
-<h2>👨‍🏫 Mode Guru BK <span class="badge">AKTIF</span></h2>
-<button class="logout-button" onclick="logoutGuruBK()">🚪 Logout</button>
-</div>
-<div class="logo-manager">
-<h4>🖼️ Manajemen Logo (Tersimpan Permanen di Spreadsheet)</h4>
-<div class="logo-row">
-<span class="logo-label">Logo Kiri:</span>
-<input type="file" id="inputLogoKiriSave" accept="image/*">
-<button class="logo-btn logo-btn-save" onclick="uploadLogo('kiri')">💾 Simpan</button>
-<button class="logo-btn logo-btn-delete" onclick="deleteLogo('kiri')">🗑️ Hapus</button>
-<span class="logo-status empty" id="statusLogoKiri">❌ Belum ada logo</span>
-</div>
-<div class="logo-row">
-<span class="logo-label">Logo Kanan:</span>
-<input type="file" id="inputLogoKananSave" accept="image/*">
-<button class="logo-btn logo-btn-save" onclick="uploadLogo('kanan')">💾 Simpan</button>
-<button class="logo-btn logo-btn-delete" onclick="deleteLogo('kanan')">🗑️ Hapus</button>
-<span class="logo-status empty" id="statusLogoKanan">❌ Belum ada logo</span>
-</div>
-<small style="color:#666; display:block; margin-top:5px;">💡 Logo yang sudah disimpan akan <strong>otomatis dipakai</strong> setiap generate PDF.</small>
-</div>
-<div class="gurubk-controls">
-<div class="field">
-<label for="inputNISGuruBK">🔍 NIS Siswa:</label>
-<input type="text" id="inputNISGuruBK" placeholder="Contoh: 12345" autocomplete="off">
-</div>
-<div class="field">
-<label for="inputNISNGuruBK">🔍 NISN Siswa:</label>
-<input type="text" id="inputNISNGuruBK" placeholder="Contoh: 0012345678" autocomplete="off">
-</div>
-<div class="field">
-<label for="inputLogoHeaderKiri">🖼️ Logo Kiri (Override):</label>
-<input type="file" id="inputLogoHeaderKiri" accept="image/*">
-<small style="color:#666; font-size:0.8rem;">Opsional. Mengabaikan logo tersimpan.</small>
-</div>
-<div class="field">
-<label for="inputLogoHeaderKanan">🖼️ Logo Kanan (Override):</label>
-<input type="file" id="inputLogoHeaderKanan" accept="image/*">
-<small style="color:#666; font-size:0.8rem;">Opsional. Mengabaikan logo tersimpan.</small>
-</div>
-<button class="generate-btn" id="btnGenerateGuruBK" onclick="generatePDFGuruBK()">📄 Tampilkan Laporan PDF</button>
-</div>
-<div class="pdf-viewer-container" id="pdfViewerContainer">
-<div class="pdf-viewer-header">
-<h3>📄 <span id="pdfTitle">Laporan Rekapitulasi Pelanggaran Siswa</span></h3>
-<div class="pdf-actions">
-<button onclick="printPDF()" title="Cetak PDF">🖨️ Cetak</button>
-<button onclick="openPDFNewTab()" title="Buka di Tab Baru">🔗 Buka Tab Baru</button>
-<button class="btn-download" id="btnDownloadPDF" onclick="downloadPDF()" title="Download PDF">📥 Download</button>
-</div>
-</div>
-<iframe id="pdfViewer" src="" title="PDF Viewer"></iframe>
-<div class="pdf-info" id="pdfInfo"></div>
-</div>
-</div>
-<div class="table-container" id="tableContainer">
-<table id="catatanTable">
-<thead>
-<tr>
-<th>No</th><th>Tanggal Kejadian</th><th>NIS</th><th>NISN</th><th>Nama Siswa</th><th>Jenis Kelamin</th>
-<th>Kelas</th><th>Waktu Kejadian</th><th>Tempat Kejadian</th><th>Uraian Kejadian (Fakta)</th>
-<th>Subjek Terlibat</th><th>Analisis Singkat</th><th>Bentuk Penanganan</th>
-<th>Tindak Lanjut</th><th>Catatan Tambahan</th><th>Nama Orang Tua / Wali</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><input type="date"></td>
-<td><input type="text" placeholder="NIS"></td>
-<td><input type="text" placeholder="NISN"></td>
-<td><input type="text" placeholder="Nama Lengkap"></td>
-<td><select><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
-<td><select><option value="">Pilih Kelas</option><option value="IX-I">IX-I</option></select></td>
-<td><input type="time"></td>
-<td><input type="text" placeholder="Contoh: Kelas"></td>
-<td><textarea placeholder="Deskripsikan kejadian..."></textarea></td>
-<td><input type="text" placeholder="Nama siswa/guru lain"></td>
-<td><textarea placeholder="Interpretasi awal..."></textarea></td>
-<td><textarea placeholder="Intervensi yang dilakukan..."></textarea></td>
-<td><textarea placeholder="Langkah selanjutnya..."></textarea></td>
-<td><textarea placeholder="Info tambahan..."></textarea></td>
-<td><input type="text" placeholder="Nama Orang Tua / Wali"></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="modal-overlay modal-gurubk" id="gurubkLoginModal">
-<div class="modal-box">
-<h2>🔐 Login Guru BK</h2>
-<p>Masukkan password untuk mengakses mode Guru BK dan melihat laporan rekapitulasi pelanggaran siswa.</p>
-<label for="inputPasswordGuruBK">Password:</label>
-<div class="password-wrapper">
-<input type="password" id="inputPasswordGuruBK" placeholder="Masukkan password" autocomplete="off">
-<button type="button" class="toggle-password" onclick="togglePasswordVisibility()" title="Lihat/Sembunyikan password">👁️</button>
-</div>
-<div class="password-hint">
-<strong>💡 Lupa Password?</strong><br>
-Password dapat diubah kapan saja melalui <strong>Google Spreadsheet</strong> → sheet <strong>"Pengaturan"</strong> → baris <strong>"passwordGuruBK"</strong> → edit kolom B.
-</div>
-<div class="modal-actions">
-<button class="btn-cancel" onclick="closeGuruBKLogin()">Batal</button>
-<button class="btn-login" id="btnLoginGuruBK" onclick="loginGuruBK()">🔓 Login</button>
-</div>
-</div>
-</div>
-<div class="whiteboard-overlay" id="whiteboardOverlay">
-<div class="whiteboard-modal">
-<div class="whiteboard-header" onclick="closeWhiteboard()">
-<h3>📝 Papan Tulis</h3>
-<span>Klik header untuk menutup</span>
-</div>
-<div class="whiteboard-body">
-<textarea id="whiteboardInput" class="whiteboard-input" placeholder="Ketik data di sini..."></textarea>
-</div>
-<div class="whiteboard-footer">
-<button class="wb-btn wb-btn-cancel" onclick="closeWhiteboard()">❌ Batal</button>
-<button class="wb-btn wb-btn-save" onclick="saveWhiteboard()">💾 Simpan & Tutup</button>
-</div>
-</div>
-</div>
-<footer>
-<p>&copy; 2026 Bimbingan Konseling SMP 56. Platform Administrasi Digital.</p>
-</footer>
+  <header>
+    <h1>Format Catatan Kasus/Anekdot</h1>
+    <p class="subtitle">Bimbingan Konseling SMP 56</p>
+  </header>
+  <div class="info-box rule-new">
+    <p><strong>📌 Aturan Sistem — Satu Laporan PDF per Siswa + Arsip Otomatis:</strong></p>
+    <ul>
+      <li>Setiap siswa (berdasarkan NIS/NISN) hanya memiliki <strong>SATU file PDF rekap</strong> yang berisi seluruh kasusnya.</li>
+      <li><strong>NIS dan NISN:</strong> Diisi terpisah. NIS/NISN sebagai kunci unik untuk mengidentifikasi siswa.</li>
+      <li><strong>Nama Siswa & Orang Tua:</strong> Menggunakan data yang PERTAMA KALI diinput.</li>
+      <li><strong>📅 Format Tanggal:</strong> Semua tanggal di Spreadsheet menggunakan format Indonesia <strong>DD/MM/YYYY</strong>.</li>
+      <li><strong>📂 Arsip Otomatis:</strong> Saat data baru disimpan/diedit/dihapus, data lama di sheet <strong>"Catatan Kasus"</strong> otomatis dipindahkan ke sheet <strong>"Riwayat Kasus 1"</strong>. Sheet aktif hanya menampilkan <strong>1 baris data terbaru + 1 link PDF</strong> per siswa.</li>
+      <li><strong>📝 Edit Kasus Lama:</strong> Login Guru BK → masukkan <strong>NIS Siswa</strong> → pilih kasus dari list → edit data → Simpan → PDF lama → Trash, PDF baru dibuat.</li>
+      <li><strong>🗑️ Hapus Kasus Duplikat:</strong> Jika ada kasus dengan tanggal sama, sistem akan menandai (highlight kuning). Klik tombol <strong>"🗑️ Hapus"</strong> untuk menghapus salah satu kasus — PDF baru otomatis dibuat hanya dengan kasus tersisa.</li>
+      <li><strong>Baris:</strong> Gunakan tombol <strong>(+)</strong> untuk menambah baris, <strong>(-)</strong> untuk menghapus baris terakhir, dan <strong>🔄</strong> untuk mereset semua isian tabel.</li>
+      <li><strong>Kelas:</strong> Pilih kelas siswa dari menu dropdown (IX-C).</li>
+      <li><strong>💾 Simpan ke Spreadsheet:</strong> Data akan terakumulasi di Riwayat Kasus. Reset tabel TIDAK menghapus data di Spreadsheet.</li>
+      <li><strong>🔑 Password Guru BK:</strong> Bisa diedit langsung di Spreadsheet → sheet <strong>"Pengaturan"</strong> → baris <strong>"passwordGuruBK"</strong> → edit kolom B.</li>
+      <li><strong>🖼️ Logo:</strong> Upload logo sekali via panel Guru BK → logo tersimpan permanen di Spreadsheet & otomatis dipakai setiap generate PDF.</li>
+      <li><strong>🏠 Tombol Kembali:</strong> Gunakan tombol <strong>"🏠 Kembali"</strong> di toolbar untuk kembali ke halaman induk.</li>
+    </ul>
+  </div>
+  <div class="toolbar">
+    <button class="home-button" title="Kembali ke Halaman Induk" onclick="goBackHome()">🏠 Kembali</button>
+    <button class="add-row-button" title="Tambah Baris Data" onclick="addRow()">+</button>
+    <button class="remove-row-button" title="Hapus Baris Terakhir" onclick="removeRow()">-</button>
+    <button class="reset-button" title="Reset Semua Isian Tabel" onclick="resetTable()">🔄</button>
+    <button class="gurubk-button" title="Mode Guru BK - Lihat Rekap PDF Siswa" onclick="openGuruBKLogin()">👨‍🏫 Guru BK</button>
+    <button class="nav-button save-button" onclick="saveData()">💾 Simpan ke Spreadsheet</button>
+  </div>
+  <div class="gurubk-panel" id="gurubkPanel">
+    <div class="gurubk-header">
+      <h2>👨‍🏫 Mode Guru BK <span class="badge">AKTIF</span></h2>
+      <button class="logout-button" onclick="logoutGuruBK()">🚪 Logout</button>
+    </div>
+
+    <!-- ⭐ FITUR: Edit & Hapus Kasus berdasarkan NIS -->
+    <div class="edit-case-manager">
+      <h4>📝 Edit / Hapus Kasus Lama (Berdasarkan NIS Siswa)</h4>
+      <small style="color:#666; display:block; margin-bottom:10px;">
+        💡 Masukkan <strong>NIS Siswa</strong> untuk mencari semua kasus.
+        <strong>✏️ Edit</strong> untuk ubah data kasus, <strong>🗑️ Hapus</strong> untuk menghapus kasus (misal: duplikat tanggal).
+        Kasus yang dihapus akan hilang dari PDF baru.
+      </small>
+      <div class="edit-case-search">
+        <div class="edit-field">
+          <label for="inputEditNIS">🔢 NIS Siswa:</label>
+          <input type="text" id="inputEditNIS" placeholder="Contoh: 12345" autocomplete="off">
+        </div>
+        <button class="generate-btn" onclick="searchCaseByNIS()" style="background:#3498db;">🔍 Cari Kasus</button>
+      </div>
+      <div id="editCaseResult"></div>
+    </div>
+
+    <div class="logo-manager">
+      <h4>🖼️ Manajemen Logo (Tersimpan Permanen di Spreadsheet)</h4>
+      <div class="logo-row">
+        <span class="logo-label">Logo Kiri:</span>
+        <input type="file" id="inputLogoKiriSave" accept="image/*">
+        <button class="logo-btn logo-btn-save" onclick="uploadLogo('kiri')">💾 Simpan</button>
+        <button class="logo-btn logo-btn-delete" onclick="deleteLogo('kiri')">🗑️ Hapus</button>
+        <span class="logo-status empty" id="statusLogoKiri">❌ Belum ada logo</span>
+      </div>
+      <div class="logo-row">
+        <span class="logo-label">Logo Kanan:</span>
+        <input type="file" id="inputLogoKananSave" accept="image/*">
+        <button class="logo-btn logo-btn-save" onclick="uploadLogo('kanan')">💾 Simpan</button>
+        <button class="logo-btn logo-btn-delete" onclick="deleteLogo('kanan')">🗑️ Hapus</button>
+        <span class="logo-status empty" id="statusLogoKanan">❌ Belum ada logo</span>
+      </div>
+      <small style="color:#666; display:block; margin-top:5px;">💡 Logo yang sudah disimpan akan <strong>otomatis dipakai</strong> setiap generate PDF.</small>
+    </div>
+    <div class="gurubk-controls">
+      <div class="field">
+        <label for="inputNISGuruBK">🔍 NIS Siswa:</label>
+        <input type="text" id="inputNISGuruBK" placeholder="Contoh: 12345" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="inputNISNGuruBK">🔍 NISN Siswa:</label>
+        <input type="text" id="inputNISNGuruBK" placeholder="Contoh: 0012345678" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="inputLogoHeaderKiri">🖼️ Logo Kiri (Override):</label>
+        <input type="file" id="inputLogoHeaderKiri" accept="image/*">
+        <small style="color:#666; font-size:0.8rem;">Opsional. Mengabaikan logo tersimpan.</small>
+      </div>
+      <div class="field">
+        <label for="inputLogoHeaderKanan">🖼️ Logo Kanan (Override):</label>
+        <input type="file" id="inputLogoHeaderKanan" accept="image/*">
+        <small style="color:#666; font-size:0.8rem;">Opsional. Mengabaikan logo tersimpan.</small>
+      </div>
+      <button class="generate-btn" id="btnGenerateGuruBK" onclick="generatePDFGuruBK()">📄 Tampilkan Laporan PDF</button>
+    </div>
+    <div class="pdf-viewer-container" id="pdfViewerContainer">
+      <div class="pdf-viewer-header">
+        <h3>📄 <span id="pdfTitle">Laporan Rekapitulasi Pelanggaran Siswa</span></h3>
+        <div class="pdf-actions">
+          <button onclick="printPDF()" title="Cetak PDF">🖨️ Cetak</button>
+          <button onclick="openPDFNewTab()" title="Buka di Tab Baru">🔗 Buka Tab Baru</button>
+          <button class="btn-download" id="btnDownloadPDF" onclick="downloadPDF()" title="Download PDF">📥 Download</button>
+        </div>
+      </div>
+      <iframe id="pdfViewer" src="" title="PDF Viewer"></iframe>
+      <div class="pdf-info" id="pdfInfo"></div>
+    </div>
+  </div>
+  <div class="table-container" id="tableContainer">
+    <table id="catatanTable">
+      <thead>
+        <tr>
+          <th>No</th><th>Tanggal Kejadian</th><th>NIS</th><th>NISN</th><th>Nama Siswa</th><th>Jenis Kelamin</th>
+          <th>Kelas</th><th>Waktu Kejadian</th><th>Tempat Kejadian</th><th>Uraian Kejadian (Fakta)</th>
+          <th>Subjek Terlibat</th><th>Analisis Singkat</th><th>Bentuk Penanganan</th>
+          <th>Tindak Lanjut</th><th>Catatan Tambahan</th><th>Nama Orang Tua / Wali</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><input type="date"></td>
+          <td><input type="text" placeholder="NIS"></td>
+          <td><input type="text" placeholder="NISN"></td>
+          <td><input type="text" placeholder="Nama Lengkap"></td>
+          <td><select><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
+          <td><select><option value="">Pilih Kelas</option><option value="IX-C">IX-C</option></select></td>
+          <td><input type="time"></td>
+          <td><input type="text" placeholder="Contoh: Kelas"></td>
+          <td><textarea placeholder="Deskripsikan kejadian..."></textarea></td>
+          <td><input type="text" placeholder="Nama siswa/guru lain"></td>
+          <td><textarea placeholder="Interpretasi awal..."></textarea></td>
+          <td><textarea placeholder="Intervensi yang dilakukan..."></textarea></td>
+          <td><textarea placeholder="Langkah selanjutnya..."></textarea></td>
+          <td><textarea placeholder="Info tambahan..."></textarea></td>
+          <td><input type="text" placeholder="Nama Orang Tua / Wali"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-overlay modal-gurubk" id="gurubkLoginModal">
+    <div class="modal-box">
+      <h2>🔐 Login Guru BK</h2>
+      <p>Masukkan password untuk mengakses mode Guru BK dan melihat laporan rekapitulasi pelanggaran siswa.</p>
+      <label for="inputPasswordGuruBK">Password:</label>
+      <div class="password-wrapper">
+        <input type="password" id="inputPasswordGuruBK" placeholder="Masukkan password" autocomplete="off">
+        <button type="button" class="toggle-password" onclick="togglePasswordVisibility()" title="Lihat/Sembunyikan password">👁️</button>
+      </div>
+      <div class="password-hint">
+        <strong>💡 Lupa Password?</strong><br>
+        Password dapat diubah kapan saja melalui <strong>Google Spreadsheet</strong> → sheet <strong>"Pengaturan"</strong> → baris <strong>"passwordGuruBK"</strong> → edit kolom B.
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeGuruBKLogin()">Batal</button>
+        <button class="btn-login" id="btnLoginGuruBK" onclick="loginGuruBK()">🔓 Login</button>
+      </div>
+    </div>
+  </div>
+  <div class="whiteboard-overlay" id="whiteboardOverlay">
+    <div class="whiteboard-modal">
+      <div class="whiteboard-header" onclick="closeWhiteboard()">
+        <h3>📝 Papan Tulis</h3>
+        <span>Klik header untuk menutup</span>
+      </div>
+      <div class="whiteboard-body">
+        <textarea id="whiteboardInput" class="whiteboard-input" placeholder="Ketik data di sini..."></textarea>
+      </div>
+      <div class="whiteboard-footer">
+        <button class="wb-btn wb-btn-cancel" onclick="closeWhiteboard()">❌ Batal</button>
+        <button class="wb-btn wb-btn-save" onclick="saveWhiteboard()">💾 Simpan & Tutup</button>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>&copy; 2026 Bimbingan Konseling SMP 56. Platform Administrasi Digital.</p>
+  </footer>
 </div>
 <div class="status-toast" id="statusToast"></div>
 <script>
-// ============================================
-// ✅ KONFIGURASI - URL HALAMAN INDUK (SAMA DENGAN index2.txt)
-// ============================================
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw53ajXfYpvlYfE_DJ7iN4nfLf_ybc3MKpPKhufvN-judfEA_BUqsT8MP9pJilM8dnf/exec';
 const MAIN_PAGE_URL = "https://appseet11-cmd.github.io/BK-SMP56/";
-
 let rowCount = 1;
 let isGuruBKLoggedIn = false;
 let currentPDFUrl = '';
 let currentPDFFileName = '';
 let activeField = null;
 let logoInfo = { kiri: { exists: false }, kanan: { exists: false } };
+let currentEditMatches = [];
+let currentEditStudentInfo = null;
+let currentDuplicateDates = [];
 
 function showToast(message, type = 'info', duration = 4000) {
-const toast = document.getElementById('statusToast');
-toast.textContent = message;
-toast.className = 'status-toast ' + type + ' show';
-setTimeout(() => { toast.classList.remove('show'); }, duration);
+  const toast = document.getElementById('statusToast');
+  toast.textContent = message;
+  toast.className = 'status-toast ' + type + ' show';
+  setTimeout(() => { toast.classList.remove('show'); }, duration);
 }
-
-// ============================================
-// ✅ FUNGSI KEMBALI - ATURAN SAMA DENGAN index2.txt
-// ============================================
 function goBackHome() {
-    if (!confirm("Tutup halaman dan kembali ke menu utama?")) return;
-    try { window.open('', '_self'); window.close(); } catch (e) {}
-    setTimeout(function() {
-        try { if (window && !window.closed) window.location.href = MAIN_PAGE_URL; } catch (e) {}
-    }, 500);
+  if (!confirm("Tutup halaman dan kembali ke menu utama?")) return;
+  try { window.open('', '_self'); window.close(); } catch (e) {}
+  setTimeout(function() { try { if (window && !window.closed) window.location.href = MAIN_PAGE_URL; } catch (e) {} }, 500);
 }
-
 function getKelasDropdown() {
-return `<select><option value="">Pilih Kelas</option><option value="IX-I">IX-I</option></select>`;
+  return `<select><option value="">Pilih Kelas</option><option value="IX-C">IX-C</option></select>`;
 }
 function addRow() {
-const tbody = document.querySelector('#catatanTable tbody');
-rowCount++;
-const newRow = document.createElement('tr');
-newRow.innerHTML = `
-<td>${rowCount}</td>
-<td><input type="date"></td>
-<td><input type="text" placeholder="NIS"></td>
-<td><input type="text" placeholder="NISN"></td>
-<td><input type="text" placeholder="Nama Lengkap"></td>
-<td><select><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
-<td>${getKelasDropdown()}</td>
-<td><input type="time"></td>
-<td><input type="text" placeholder="Contoh: Kelas"></td>
-<td><textarea placeholder="Deskripsikan kejadian..."></textarea></td>
-<td><input type="text" placeholder="Nama siswa/guru lain"></td>
-<td><textarea placeholder="Interpretasi awal..."></textarea></td>
-<td><textarea placeholder="Intervensi yang dilakukan..."></textarea></td>
-<td><textarea placeholder="Langkah selanjutnya..."></textarea></td>
-<td><textarea placeholder="Info tambahan..."></textarea></td>
-<td><input type="text" placeholder="Nama Orang Tua / Wali"></td>
-`;
-tbody.appendChild(newRow);
+  const tbody = document.querySelector('#catatanTable tbody');
+  rowCount++;
+  const newRow = document.createElement('tr');
+  newRow.innerHTML = `<td>${rowCount}</td><td><input type="date"></td><td><input type="text" placeholder="NIS"></td><td><input type="text" placeholder="NISN"></td><td><input type="text" placeholder="Nama Lengkap"></td><td><select><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td><td>${getKelasDropdown()}</td><td><input type="time"></td><td><input type="text" placeholder="Contoh: Kelas"></td><td><textarea placeholder="Deskripsikan kejadian..."></textarea></td><td><input type="text" placeholder="Nama siswa/guru lain"></td><td><textarea placeholder="Interpretasi awal..."></textarea></td><td><textarea placeholder="Intervensi yang dilakukan..."></textarea></td><td><textarea placeholder="Langkah selanjutnya..."></textarea></td><td><textarea placeholder="Info tambahan..."></textarea></td><td><input type="text" placeholder="Nama Orang Tua / Wali"></td>`;
+  tbody.appendChild(newRow);
 }
 function removeRow() {
-const tbody = document.querySelector('#catatanTable tbody');
-const rows = tbody.querySelectorAll('tr');
-if (rows.length > 1) {
-tbody.removeChild(rows[rows.length - 1]);
-rowCount--;
-updateRowNumbers();
-} else {
-showToast('Minimal harus ada satu baris data.', 'error');
-}
+  const tbody = document.querySelector('#catatanTable tbody');
+  const rows = tbody.querySelectorAll('tr');
+  if (rows.length > 1) { tbody.removeChild(rows[rows.length - 1]); rowCount--; updateRowNumbers(); }
+  else { showToast('Minimal harus ada satu baris data.', 'error'); }
 }
 function resetTable() {
-const tbody = document.querySelector('#catatanTable tbody');
-const rows = tbody.querySelectorAll('tr');
-let adaIsian = false;
-rows.forEach(row => {
-const inputs = row.querySelectorAll('input, textarea');
-const selects = row.querySelectorAll('select');
-inputs.forEach(inp => { if (inp.value && inp.value.trim() !== '') adaIsian = true; });
-selects.forEach(sel => { if (sel.value && sel.value.trim() !== '') adaIsian = true; });
-});
-const confirmMsg = adaIsian
-? '⚠️ PERINGATAN: Tabel memiliki data yang sudah diisi.\nSemua baris tambahan akan dihapus dan isian akan dikosongkan.\nData yang belum disimpan akan HILANG dari tampilan, TAPI tetap aman di Spreadsheet jika sudah ditekan Simpan.\nYakin ingin mereset tabel?'
-: 'Reset tabel ke kondisi awal (1 baris kosong)?';
-if (!confirm(confirmMsg)) return;
-while (tbody.rows.length > 1) { tbody.deleteRow(tbody.rows.length - 1); }
-const firstRow = tbody.rows[0];
-firstRow.querySelectorAll('input, textarea').forEach(inp => { inp.value = ''; });
-firstRow.querySelectorAll('select').forEach(sel => { sel.selectedIndex = 0; });
-rowCount = 1;
-firstRow.cells[0].textContent = '1';
-showToast('✅ Tabel berhasil direset ke kondisi awal.', 'success', 3000);
+  const tbody = document.querySelector('#catatanTable tbody');
+  const rows = tbody.querySelectorAll('tr');
+  let adaIsian = false;
+  rows.forEach(row => {
+    row.querySelectorAll('input, textarea').forEach(inp => { if (inp.value && inp.value.trim() !== '') adaIsian = true; });
+    row.querySelectorAll('select').forEach(sel => { if (sel.value && sel.value.trim() !== '') adaIsian = true; });
+  });
+  const confirmMsg = adaIsian
+    ? '⚠️ PERINGATAN: Tabel memiliki data yang sudah diisi.\nSemua baris tambahan akan dihapus dan isian akan dikosongkan.\nData yang belum disimpan akan HILANG dari tampilan, TAPI tetap aman di Spreadsheet jika sudah ditekan Simpan.\nYakin ingin mereset tabel?'
+    : 'Reset tabel ke kondisi awal (1 baris kosong)?';
+  if (!confirm(confirmMsg)) return;
+  while (tbody.rows.length > 1) { tbody.deleteRow(tbody.rows.length - 1); }
+  const firstRow = tbody.rows[0];
+  firstRow.querySelectorAll('input, textarea').forEach(inp => { inp.value = ''; });
+  firstRow.querySelectorAll('select').forEach(sel => { sel.selectedIndex = 0; });
+  rowCount = 1;
+  firstRow.cells[0].textContent = '1';
+  showToast('✅ Tabel berhasil direset ke kondisi awal.', 'success', 3000);
 }
 function updateRowNumbers() {
-const rows = document.querySelectorAll('#catatanTable tbody tr');
-rows.forEach((row, index) => { row.cells[0].textContent = index + 1; });
+  const rows = document.querySelectorAll('#catatanTable tbody tr');
+  rows.forEach((row, index) => { row.cells[0].textContent = index + 1; });
 }
 function saveData() {
-const tbody = document.querySelector('#catatanTable tbody');
-const rows = tbody.querySelectorAll('tr');
-const dataArray = [];
-const invalidRows = [];
-rows.forEach((row, idx) => {
-const cells = row.querySelectorAll('td');
-const nis = cells[2].querySelector('input').value.trim();
-const nisn = cells[3].querySelector('input').value.trim();
-const namaSiswa = cells[4].querySelector('input').value.trim();
-if (!namaSiswa && !nis && !nisn) return;
-if (!nis && !nisn) { invalidRows.push(idx + 1); return; }
-dataArray.push({
-no: cells[0].textContent,
-tanggal: cells[1].querySelector('input').value,
-nis: nis, nisn: nisn,
-namaSiswa: namaSiswa,
-jenisKelamin: cells[5].querySelector('select').value,
-kelas: cells[6].querySelector('select').value,
-waktu: cells[7].querySelector('input').value,
-tempat: cells[8].querySelector('input').value,
-uraian: cells[9].querySelector('textarea').value,
-subjek: cells[10].querySelector('input').value,
-analisis: cells[11].querySelector('textarea').value,
-penanganan: cells[12].querySelector('textarea').value,
-tindakLanjut: cells[13].querySelector('textarea').value,
-catatan: cells[14].querySelector('textarea').value,
-namaOrtu: cells[15].querySelector('input').value
-});
-});
-if (invalidRows.length > 0) {
-showToast(`⚠️ Baris ${invalidRows.join(', ')} harus memiliki NIS atau NISN.`, 'error', 5000);
-return;
+  const tbody = document.querySelector('#catatanTable tbody');
+  const rows = tbody.querySelectorAll('tr');
+  const dataArray = [];
+  const invalidRows = [];
+  rows.forEach((row, idx) => {
+    const cells = row.querySelectorAll('td');
+    const nis = cells[2].querySelector('input').value.trim();
+    const nisn = cells[3].querySelector('input').value.trim();
+    const namaSiswa = cells[4].querySelector('input').value.trim();
+    if (!namaSiswa && !nis && !nisn) return;
+    if (!nis && !nisn) { invalidRows.push(idx + 1); return; }
+    dataArray.push({
+      no: cells[0].textContent, tanggal: cells[1].querySelector('input').value,
+      nis: nis, nisn: nisn, namaSiswa: namaSiswa,
+      jenisKelamin: cells[5].querySelector('select').value,
+      kelas: cells[6].querySelector('select').value,
+      waktu: cells[7].querySelector('input').value,
+      tempat: cells[8].querySelector('input').value,
+      uraian: cells[9].querySelector('textarea').value,
+      subjek: cells[10].querySelector('input').value,
+      analisis: cells[11].querySelector('textarea').value,
+      penanganan: cells[12].querySelector('textarea').value,
+      tindakLanjut: cells[13].querySelector('textarea').value,
+      catatan: cells[14].querySelector('textarea').value,
+      namaOrtu: cells[15].querySelector('input').value
+    });
+  });
+  if (invalidRows.length > 0) { showToast(`⚠️ Baris ${invalidRows.join(', ')} harus memiliki NIS atau NISN.`, 'error', 5000); return; }
+  if (dataArray.length === 0) { showToast('Tidak ada data yang valid untuk disimpan.', 'error'); return; }
+  const confirmMsg = `Akan menyimpan ${dataArray.length} kasus.\n⚠️ ATURAN SISTEM:\n• Data akan ditambahkan ke Spreadsheet (Akumulatif).\n• Kasus lama TIDAK dihapus, melainkan tetap ada di Sheet "Riwayat Kasus".\n• Data lama di "Catatan Kasus" dipindah ke "Riwayat Kasus 1".\n• PDF Rekap akan diupdate berisi SEMUA kasus (Lama + Baru).\n• Nama Siswa & Orang Tua menggunakan data PERTAMA KALI diinput.\nLanjutkan?`;
+  if (!confirm(confirmMsg)) return;
+  const btn = document.querySelector('.save-button');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '⏳ Menyimpan...';
+  btn.disabled = true;
+  fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'save', data: dataArray }) })
+  .then(res => res.text())
+  .then(text => {
+    let data;
+    try { data = JSON.parse(text.trim()); } catch (e) { console.error("Raw Response:", text); throw new Error('Respon server tidak valid (bukan JSON). Cek Console.'); }
+    if (data.status === 'success') {
+      let msg = '✅ DATA SUDAH TERSIMPAN\n';
+      if (data.summary && Array.isArray(data.summary)) {
+        data.summary.forEach(s => {
+          msg += `👤 ${s.namaSiswa}`;
+          if (s.nis) msg += ` (NIS: ${s.nis})`; else if (s.nisn) msg += ` (NISN: ${s.nisn})`;
+          msg += `:\n   • Total kasus dalam PDF rekap: ${s.totalKasus}\n`;
+        });
+      }
+      showToast('✅ Data Sudah Tersimpan!', 'success');
+      alert(msg);
+    } else { showToast('❌ ' + (data.message || 'Gagal menyimpan data'), 'error', 5000); }
+  })
+  .catch(error => { console.error('Error:', error); showToast('❌ Gagal terhubung: ' + error.message, 'error', 5000); })
+  .finally(() => { btn.innerHTML = originalText; btn.disabled = false; });
 }
-if (dataArray.length === 0) { showToast('Tidak ada data yang valid untuk disimpan.', 'error'); return; }
-const confirmMsg = `Akan menyimpan ${dataArray.length} kasus.\n⚠️ ATURAN SISTEM:\n• Data akan ditambahkan ke Spreadsheet (Akumulatif).\n• Kasus lama TIDAK dihapus, melainkan tetap ada di Sheet "Riwayat Kasus".\n• PDF Rekap akan diupdate berisi SEMUA kasus (Lama + Baru).\n• Nama Siswa & Orang Tua menggunakan data PERTAMA KALI diinput.\nLanjutkan?`;
-if (!confirm(confirmMsg)) return;
-const btn = document.querySelector('.save-button');
-const originalText = btn.innerHTML;
-btn.innerHTML = '⏳ Menyimpan...';
-btn.disabled = true;
-fetch(WEB_APP_URL, {
-method: 'POST',
-mode: 'cors',
-body: JSON.stringify({ action: 'save', data: dataArray })
-})
-.then(res => res.text())
-.then(text => {
-let data;
-try {
-const cleanText = text.trim();
-data = JSON.parse(cleanText);
-} catch (e) {
-console.error("Raw Response:", text);
-throw new Error('Respon server tidak valid (bukan JSON). Cek Console.');
-}
-if (data.status === 'success') {
-let msg = '✅ DATA SUDAH TERSIMPAN\n';
-if (data.summary && Array.isArray(data.summary)) {
-data.summary.forEach(s => {
-msg += `👤 ${s.namaSiswa}`;
-if (s.nis) msg += ` (NIS: ${s.nis})`;
-else if (s.nisn) msg += ` (NISN: ${s.nisn})`;
-msg += `:\n`;
-msg += `   • Total kasus dalam PDF rekap: ${s.totalKasus}\n`;
-});
-}
-showToast('✅ Data Sudah Tersimpan!', 'success');
-alert(msg);
-} else {
-showToast('❌ ' + (data.message || 'Gagal menyimpan data'), 'error', 5000);
-}
-})
-.catch(error => {
-console.error('Error:', error);
-showToast('❌ Gagal terhubung: ' + error.message, 'error', 5000);
-})
-.finally(() => {
-btn.innerHTML = originalText;
-btn.disabled = false;
-});
-}
-
 document.getElementById('tableContainer').addEventListener('click', function(e) {
-const target = e.target;
-if (target.tagName === 'TEXTAREA') openWhiteboard(target);
-else if (target.tagName === 'INPUT' && target.type === 'text') openWhiteboard(target);
+  const target = e.target;
+  if (target.tagName === 'TEXTAREA') openWhiteboard(target);
+  else if (target.tagName === 'INPUT' && target.type === 'text') openWhiteboard(target);
 });
 function openWhiteboard(fieldElement) {
-activeField = fieldElement;
-const overlay = document.getElementById('whiteboardOverlay');
-const input = document.getElementById('whiteboardInput');
-const headerTitle = document.querySelector('.whiteboard-header h3');
-let colName = "Field";
-const cell = fieldElement.closest('td');
-if (cell) {
-const colIndex = cell.cellIndex;
-const headerCell = document.querySelector(`#catatanTable thead th:nth-child(${colIndex + 1})`);
-if (headerCell) colName = headerCell.textContent;
+  activeField = fieldElement;
+  const overlay = document.getElementById('whiteboardOverlay');
+  const input = document.getElementById('whiteboardInput');
+  const headerTitle = document.querySelector('.whiteboard-header h3');
+  let colName = "Field";
+  const cell = fieldElement.closest('td');
+  if (cell) { const colIndex = cell.cellIndex; const headerCell = document.querySelector(`#catatanTable thead th:nth-child(${colIndex + 1})`); if (headerCell) colName = headerCell.textContent; }
+  headerTitle.textContent = `📝 ${colName}`;
+  input.value = fieldElement.value;
+  overlay.classList.add('active');
+  setTimeout(() => { input.focus(); input.scrollTop = input.scrollHeight; }, 100);
 }
-headerTitle.textContent = `📝 ${colName}`;
-input.value = fieldElement.value;
-overlay.classList.add('active');
-setTimeout(() => { input.focus(); input.scrollTop = input.scrollHeight; }, 100);
-}
-function closeWhiteboard() {
-document.getElementById('whiteboardOverlay').classList.remove('active');
-activeField = null;
-}
+function closeWhiteboard() { document.getElementById('whiteboardOverlay').classList.remove('active'); activeField = null; }
 function saveWhiteboard() {
-if (activeField) {
-const newValue = document.getElementById('whiteboardInput').value;
-activeField.value = newValue;
-activeField.dispatchEvent(new Event('change'));
-activeField.dispatchEvent(new Event('input'));
+  if (activeField) { activeField.value = document.getElementById('whiteboardInput').value; activeField.dispatchEvent(new Event('change')); activeField.dispatchEvent(new Event('input')); }
+  closeWhiteboard();
 }
-closeWhiteboard();
-}
-document.getElementById('whiteboardOverlay').addEventListener('click', function(e) {
-if (e.target === this) closeWhiteboard();
-});
+document.getElementById('whiteboardOverlay').addEventListener('click', function(e) { if (e.target === this) closeWhiteboard(); });
 function openGuruBKLogin() {
-if (isGuruBKLoggedIn) {
-document.getElementById('gurubkPanel').classList.add('active');
-document.getElementById('gurubkPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-loadLogoInfo();
-return;
+  if (isGuruBKLoggedIn) { document.getElementById('gurubkPanel').classList.add('active'); document.getElementById('gurubkPanel').scrollIntoView({ behavior: 'smooth', block: 'start' }); loadLogoInfo(); return; }
+  document.getElementById('gurubkLoginModal').classList.add('active');
+  document.getElementById('inputPasswordGuruBK').value = '';
+  setTimeout(() => document.getElementById('inputPasswordGuruBK').focus(), 100);
 }
-document.getElementById('gurubkLoginModal').classList.add('active');
-document.getElementById('inputPasswordGuruBK').value = '';
-setTimeout(() => document.getElementById('inputPasswordGuruBK').focus(), 100);
-}
-function closeGuruBKLogin() {
-document.getElementById('gurubkLoginModal').classList.remove('active');
-document.getElementById('inputPasswordGuruBK').value = '';
-}
+function closeGuruBKLogin() { document.getElementById('gurubkLoginModal').classList.remove('active'); document.getElementById('inputPasswordGuruBK').value = ''; }
 function togglePasswordVisibility() {
-const inp = document.getElementById('inputPasswordGuruBK');
-const btn = inp.nextElementSibling;
-if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
-else { inp.type = 'password'; btn.textContent = '👁️'; }
+  const inp = document.getElementById('inputPasswordGuruBK');
+  const btn = inp.nextElementSibling;
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; } else { inp.type = 'password'; btn.textContent = '👁️'; }
 }
 function loginGuruBK() {
-const pwd = document.getElementById('inputPasswordGuruBK').value;
-if (!pwd) { showToast('⚠️ Password tidak boleh kosong.', 'error'); return; }
-const btn = document.getElementById('btnLoginGuruBK');
-btn.disabled = true;
-btn.innerHTML = '⏳ Memverifikasi...';
-fetch(WEB_APP_URL, {
-method: 'POST',
-mode: 'cors',
-body: JSON.stringify({ action: 'login', password: pwd })
-})
-.then(res => res.text())
-.then(text => {
-const data = JSON.parse(text);
-if (data.status === 'success') {
-isGuruBKLoggedIn = true;
-closeGuruBKLogin();
-document.getElementById('gurubkPanel').classList.add('active');
-document.getElementById('gurubkPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-showToast('✅ Login berhasil! Selamat datang, Guru BK.', 'success', 3000);
-loadLogoInfo();
-} else {
-showToast('❌ Password salah!', 'error', 4000);
-document.getElementById('inputPasswordGuruBK').value = '';
-document.getElementById('inputPasswordGuruBK').focus();
-}
-})
-.catch(() => showToast('❌ Gagal terhubung ke server.', 'error'))
-.finally(() => { btn.disabled = false; btn.innerHTML = '🔓 Login'; });
+  const pwd = document.getElementById('inputPasswordGuruBK').value;
+  if (!pwd) { showToast('⚠️ Password tidak boleh kosong.', 'error'); return; }
+  const btn = document.getElementById('btnLoginGuruBK');
+  btn.disabled = true; btn.innerHTML = '⏳ Memverifikasi...';
+  fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'login', password: pwd }) })
+  .then(res => res.text())
+  .then(text => {
+    const data = JSON.parse(text);
+    if (data.status === 'success') {
+      isGuruBKLoggedIn = true; closeGuruBKLogin();
+      document.getElementById('gurubkPanel').classList.add('active');
+      document.getElementById('gurubkPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast('✅ Login berhasil! Selamat datang, Guru BK.', 'success', 3000);
+      loadLogoInfo();
+    } else { showToast('❌ Password salah!', 'error', 4000); document.getElementById('inputPasswordGuruBK').value = ''; document.getElementById('inputPasswordGuruBK').focus(); }
+  })
+  .catch(() => showToast('❌ Gagal terhubung ke server.', 'error'))
+  .finally(() => { btn.disabled = false; btn.innerHTML = '🔓 Login'; });
 }
 function logoutGuruBK() {
-if (!confirm('Yakin ingin logout dari Mode Guru BK?\nPanel akan disembunyikan dan sesi login direset.')) return;
-isGuruBKLoggedIn = false;
-currentPDFUrl = '';
-currentPDFFileName = '';
-document.getElementById('gurubkPanel').classList.remove('active');
-document.getElementById('pdfViewerContainer').classList.remove('active');
-document.getElementById('pdfViewer').src = '';
-document.getElementById('inputNISGuruBK').value = '';
-document.getElementById('inputNISNGuruBK').value = '';
-document.getElementById('pdfInfo').innerHTML = '';
-showToast('🚪 Anda telah logout dari Mode Guru BK.', 'info', 3000);
-window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!confirm('Yakin ingin logout dari Mode Guru BK?\nPanel akan disembunyikan dan sesi login direset.')) return;
+  isGuruBKLoggedIn = false; currentPDFUrl = ''; currentPDFFileName = '';
+  document.getElementById('gurubkPanel').classList.remove('active');
+  document.getElementById('pdfViewerContainer').classList.remove('active');
+  document.getElementById('pdfViewer').src = '';
+  document.getElementById('inputNISGuruBK').value = '';
+  document.getElementById('inputNISNGuruBK').value = '';
+  document.getElementById('pdfInfo').innerHTML = '';
+  document.getElementById('inputEditNIS').value = '';
+  document.getElementById('editCaseResult').innerHTML = '';
+  currentEditMatches = [];
+  currentEditStudentInfo = null;
+  currentDuplicateDates = [];
+  showToast('🚪 Anda telah logout dari Mode Guru BK.', 'info', 3000);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function loadLogoInfo() {
-fetch(WEB_APP_URL, {
-method: 'POST',
-mode: 'cors',
-body: JSON.stringify({ action: 'getLogoInfo' })
-})
-.then(res => res.text())
-.then(text => {
-const data = JSON.parse(text);
-if (data.status === 'success') {
-logoInfo = data.logoInfo;
-updateLogoStatusUI();
-}
-})
-.catch(err => console.error('Gagal load logo info:', err));
+  fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'getLogoInfo' }) })
+  .then(res => res.text())
+  .then(text => { const data = JSON.parse(text); if (data.status === 'success') { logoInfo = data.logoInfo; updateLogoStatusUI(); } })
+  .catch(err => console.error('Gagal load logo info:', err));
 }
 function updateLogoStatusUI() {
-const statusKiri = document.getElementById('statusLogoKiri');
-const statusKanan = document.getElementById('statusLogoKanan');
-if (logoInfo.kiri && logoInfo.kiri.exists) {
-statusKiri.className = 'logo-status saved';
-statusKiri.innerHTML = `✅ Tersimpan: ${logoInfo.kiri.fileName}`;
-} else {
-statusKiri.className = 'logo-status empty';
-statusKiri.innerHTML = '❌ Belum ada logo';
-}
-if (logoInfo.kanan && logoInfo.kanan.exists) {
-statusKanan.className = 'logo-status saved';
-statusKanan.innerHTML = `✅ Tersimpan: ${logoInfo.kanan.fileName}`;
-} else {
-statusKanan.className = 'logo-status empty';
-statusKanan.innerHTML = '❌ Belum ada logo';
-}
+  const statusKiri = document.getElementById('statusLogoKiri');
+  const statusKanan = document.getElementById('statusLogoKanan');
+  if (logoInfo.kiri && logoInfo.kiri.exists) { statusKiri.className = 'logo-status saved'; statusKiri.innerHTML = `✅ Tersimpan: ${logoInfo.kiri.fileName}`; }
+  else { statusKiri.className = 'logo-status empty'; statusKiri.innerHTML = '❌ Belum ada logo'; }
+  if (logoInfo.kanan && logoInfo.kanan.exists) { statusKanan.className = 'logo-status saved'; statusKanan.innerHTML = `✅ Tersimpan: ${logoInfo.kanan.fileName}`; }
+  else { statusKanan.className = 'logo-status empty'; statusKanan.innerHTML = '❌ Belum ada logo'; }
 }
 function uploadLogo(side) {
-const inputId = side === 'kiri' ? 'inputLogoKiriSave' : 'inputLogoKananSave';
-const input = document.getElementById(inputId);
-if (!input.files || !input.files[0]) {
-showToast(`⚠️ Pilih file logo ${side} terlebih dahulu.`, 'error');
-return;
-}
-const file = input.files[0];
-if (file.size > 2 * 1024 * 1024) {
-showToast('⚠️ Ukuran file maksimal 2 MB.', 'error');
-return;
-}
-const btn = event.target;
-const originalText = btn.innerHTML;
-btn.innerHTML = '⏳ Mengupload...';
-btn.disabled = true;
-const reader = new FileReader();
-reader.onload = function(e) {
-const base64 = e.target.result;
-const fileName = `logo_${side}_${Date.now()}.png`;
-fetch(WEB_APP_URL, {
-method: 'POST',
-mode: 'cors',
-body: JSON.stringify({
-action: 'uploadLogo',
-side: side,
-base64: base64,
-fileName: fileName
-})
-})
-.then(res => res.text())
-.then(text => {
-const data = JSON.parse(text);
-if (data.status === 'success') {
-showToast(`✅ Logo ${side} berhasil disimpan ke Spreadsheet!`, 'success', 4000);
-loadLogoInfo();
-input.value = '';
-} else {
-showToast('❌ ' + data.message, 'error', 5000);
-}
-})
-.catch(err => {
-console.error('Error:', err);
-showToast('❌ Gagal upload logo: ' + err.message, 'error', 5000);
-})
-.finally(() => {
-btn.innerHTML = originalText;
-btn.disabled = false;
-});
-};
-reader.readAsDataURL(file);
+  const inputId = side === 'kiri' ? 'inputLogoKiriSave' : 'inputLogoKananSave';
+  const input = document.getElementById(inputId);
+  if (!input.files || !input.files[0]) { showToast(`⚠️ Pilih file logo ${side} terlebih dahulu.`, 'error'); return; }
+  const file = input.files[0];
+  if (file.size > 2 * 1024 * 1024) { showToast('⚠️ Ukuran file maksimal 2 MB.', 'error'); return; }
+  const btn = event.target; const originalText = btn.innerHTML;
+  btn.innerHTML = '⏳ Mengupload...'; btn.disabled = true;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64 = e.target.result;
+    const fileName = `logo_${side}_${Date.now()}.png`;
+    fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'uploadLogo', side: side, base64: base64, fileName: fileName }) })
+    .then(res => res.text())
+    .then(text => { const data = JSON.parse(text); if (data.status === 'success') { showToast(`✅ Logo ${side} berhasil disimpan ke Spreadsheet!`, 'success', 4000); loadLogoInfo(); input.value = ''; } else { showToast('❌ ' + data.message, 'error', 5000); } })
+    .catch(err => { console.error('Error:', err); showToast('❌ Gagal upload logo: ' + err.message, 'error', 5000); })
+    .finally(() => { btn.innerHTML = originalText; btn.disabled = false; });
+  };
+  reader.readAsDataURL(file);
 }
 function deleteLogo(side) {
-const info = logoInfo[side];
-if (!info || !info.exists) {
-showToast(`ℹ️ Belum ada logo ${side} yang tersimpan.`, 'info');
-return;
-}
-if (!confirm(`Yakin ingin menghapus logo ${side}?\nFile: ${info.fileName}\nLogo tidak akan lagi muncul di PDF yang di-generate setelah ini.`)) return;
-fetch(WEB_APP_URL, {
-method: 'POST',
-mode: 'cors',
-body: JSON.stringify({ action: 'deleteLogo', side: side })
-})
-.then(res => res.text())
-.then(text => {
-const data = JSON.parse(text);
-if (data.status === 'success') {
-showToast(`🗑️ Logo ${side} berhasil dihapus.`, 'success', 3000);
-loadLogoInfo();
-} else {
-showToast('❌ ' + data.message, 'error', 5000);
-}
-})
-.catch(err => showToast('❌ Gagal menghapus logo: ' + err.message, 'error', 5000));
+  const info = logoInfo[side];
+  if (!info || !info.exists) { showToast(`ℹ️ Belum ada logo ${side} yang tersimpan.`, 'info'); return; }
+  if (!confirm(`Yakin ingin menghapus logo ${side}?\nFile: ${info.fileName}\nLogo tidak akan lagi muncul di PDF yang di-generate setelah ini.`)) return;
+  fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'deleteLogo', side: side }) })
+  .then(res => res.text())
+  .then(text => { const data = JSON.parse(text); if (data.status === 'success') { showToast(`🗑️ Logo ${side} berhasil dihapus.`, 'success', 3000); loadLogoInfo(); } else { showToast('❌ ' + data.message, 'error', 5000); } })
+  .catch(err => showToast('❌ Gagal menghapus logo: ' + err.message, 'error', 5000));
 }
 function getDriveEmbedUrl(url) {
-if (!url) return '';
-let match = url.match(/\/d\/([^\/\?]+)/);
-if (match) return 'https://drive.google.com/file/d/' + match[1] + '/preview';
-match = url.match(/[?&]id=([^&]+)/);
-if (match) return 'https://drive.google.com/file/d/' + match[1] + '/preview';
-return url;
+  if (!url) return '';
+  let match = url.match(/\/d\/([^\/\?]+)/);
+  if (match) return 'https://drive.google.com/file/d/' + match[1] + '/preview';
+  match = url.match(/[?&]id=([^&]+)/);
+  if (match) return 'https://drive.google.com/file/d/' + match[1] + '/preview';
+  return url;
 }
 function generatePDFGuruBK() {
-const nis = document.getElementById('inputNISGuruBK').value.trim();
-const nisn = document.getElementById('inputNISNGuruBK').value.trim();
-if (!nis && !nisn) {
-showToast('⚠️ Silakan masukkan NIS atau NISN siswa terlebih dahulu.', 'error');
-return;
+  const nis = document.getElementById('inputNISGuruBK').value.trim();
+  const nisn = document.getElementById('inputNISNGuruBK').value.trim();
+  if (!nis && !nisn) { showToast('⚠️ Silakan masukkan NIS atau NISN siswa terlebih dahulu.', 'error'); return; }
+  const btn = document.getElementById('btnGenerateGuruBK');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '⏳ Memproses...'; btn.disabled = true;
+  const logoInputKiri = document.getElementById('inputLogoHeaderKiri');
+  const logoInputKanan = document.getElementById('inputLogoHeaderKanan');
+  let logoBase64Kiri = '', logoBase64Kanan = '';
+  const processAndSend = () => {
+    fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'rekap', nis: nis, nisn: nisn, logoBase64Kiri: logoBase64Kiri || '', logoBase64Kanan: logoBase64Kanan || '' }) })
+    .then(res => res.text())
+    .then(text => {
+      let data; try { data = JSON.parse(text); } catch (e) { throw new Error('Response tidak valid dari server.'); }
+      if (data.status === 'success') {
+        currentPDFUrl = data.pdfUrl; currentPDFFileName = data.fileName || 'rekap.pdf';
+        let sourceBadge = '<span class="pdf-source-badge baru">🆕 Data Aktif</span>';
+        const embedUrl = getDriveEmbedUrl(data.pdfUrl);
+        document.getElementById('pdfViewer').src = embedUrl;
+        let logoInfoText = '';
+        if (data.logoKiriTerpakai || data.logoKananTerpakai) logoInfoText = ' | 🖼️ Logo: ' + (data.logoKiriTerpakai ? 'Kiri✓' : '') + (data.logoKananTerpakai ? ' Kanan✓' : '');
+        document.getElementById('pdfTitle').innerHTML = `Rekap Pelanggaran: ${data.namaSiswa} (${data.kelas}) ${sourceBadge}`;
+        document.getElementById('pdfInfo').innerHTML = `<strong>👤 Nama Siswa:</strong> ${data.namaSiswa} &nbsp;|&nbsp; <strong>🏫 Kelas:</strong> ${data.kelas} &nbsp;|&nbsp; <strong>📊 Total Kasus:</strong> ${data.totalKasus} pelanggaran${logoInfoText}`;
+        document.getElementById('btnDownloadPDF').setAttribute('data-url', data.pdfUrl);
+        document.getElementById('pdfViewerContainer').classList.add('active');
+        showToast(`✅ PDF berhasil digenerate untuk ${data.namaSiswa}`, 'success', 4000);
+        document.getElementById('pdfViewerContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else { showToast('❌ ' + data.message, 'error', 5000); }
+    })
+    .catch(error => { console.error('Error:', error); showToast('❌ ' + error.message, 'error', 5000); })
+    .finally(() => { btn.innerHTML = originalText; btn.disabled = false; });
+  };
+  if (logoInputKiri.files && logoInputKiri.files[0]) { const reader = new FileReader(); reader.onload = function(e) { logoBase64Kiri = e.target.result.split(',')[1]; checkAndSend(); }; reader.readAsDataURL(logoInputKiri.files[0]); } else { checkAndSend(); }
+  function checkAndSend() { if (logoInputKanan.files && logoInputKanan.files[0]) { const readerKanan = new FileReader(); readerKanan.onload = function(e) { logoBase64Kanan = e.target.result.split(',')[1]; processAndSend(); }; readerKanan.readAsDataURL(logoInputKanan.files[0]); } else { processAndSend(); } }
 }
-const btn = document.getElementById('btnGenerateGuruBK');
-const originalText = btn.innerHTML;
-btn.innerHTML = '⏳ Memproses...';
-btn.disabled = true;
-const logoInputKiri = document.getElementById('inputLogoHeaderKiri');
-const logoInputKanan = document.getElementById('inputLogoHeaderKanan');
-let logoBase64Kiri = '';
-let logoBase64Kanan = '';
-const processAndSend = () => {
-fetch(WEB_APP_URL, {
-method: 'POST',
-mode: 'cors',
-body: JSON.stringify({
-action: 'rekap',
-nis: nis, nisn: nisn,
-logoBase64Kiri: logoBase64Kiri || '',
-logoBase64Kanan: logoBase64Kanan || ''
-})
-})
-.then(res => res.text())
-.then(text => {
-let data;
-try { data = JSON.parse(text); } catch (e) { throw new Error('Response tidak valid dari server.'); }
-if (data.status === 'success') {
-currentPDFUrl = data.pdfUrl;
-currentPDFFileName = data.fileName || 'rekap.pdf';
-let sourceBadge = '<span class="pdf-source-badge baru">🆕 Data Aktif</span>';
-const embedUrl = getDriveEmbedUrl(data.pdfUrl);
-document.getElementById('pdfViewer').src = embedUrl;
-let logoInfoText = '';
-if (data.logoKiriTerpakai || data.logoKananTerpakai) {
-logoInfoText = ' | 🖼️ Logo: ' + (data.logoKiriTerpakai ? 'Kiri✓' : '') + (data.logoKananTerpakai ? ' Kanan✓' : '');
+function printPDF() { if (!currentPDFUrl) { showToast('⚠️ Belum ada PDF yang dimuat.', 'error'); return; } const printWindow = window.open(currentPDFUrl, '_blank'); if (!printWindow) { showToast('⚠️ Popup diblokir. Izinkan popup untuk situs ini.', 'error', 5000); return; } showToast('🖨️ PDF dibuka di tab baru. Tekan Ctrl+P untuk mencetak.', 'info', 6000); }
+function openPDFNewTab() { if (!currentPDFUrl) { showToast('⚠️ Belum ada PDF yang dimuat.', 'error'); return; } window.open(currentPDFUrl, '_blank'); }
+function downloadPDF() { if (!currentPDFUrl) { showToast('⚠️ Belum ada PDF yang dimuat.', 'error'); return; } const link = document.createElement('a'); link.href = currentPDFUrl; link.target = '_blank'; link.download = currentPDFFileName || 'rekap.pdf'; document.body.appendChild(link); link.click(); document.body.removeChild(link); showToast('📥 Download dimulai...', 'success', 2500); }
+
+// ============================================
+// ⭐ FITUR: EDIT & HAPUS KASUS BERDASARKAN NIS
+// ============================================
+function formatTanggalDisplay(dateInput) {
+  if (!dateInput) return '-';
+  const date = new Date(dateInput);
+  if (isNaN(date.getTime())) return String(dateInput);
+  const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  return `${hari[date.getDay()]}, ${date.getDate()} ${bulan[date.getMonth()]} ${date.getFullYear()}`;
 }
-document.getElementById('pdfTitle').innerHTML = `Rekap Pelanggaran: ${data.namaSiswa} (${data.kelas}) ${sourceBadge}`;
-document.getElementById('pdfInfo').innerHTML = `
-<strong>👤 Nama Siswa:</strong> ${data.namaSiswa} &nbsp;|&nbsp;
-<strong>🏫 Kelas:</strong> ${data.kelas} &nbsp;|&nbsp;
-<strong>📊 Total Kasus:</strong> ${data.totalKasus} pelanggaran${logoInfoText}
-`;
-document.getElementById('btnDownloadPDF').setAttribute('data-url', data.pdfUrl);
-document.getElementById('pdfViewerContainer').classList.add('active');
-showToast(`✅ PDF berhasil digenerate untuk ${data.namaSiswa}`, 'success', 4000);
-document.getElementById('pdfViewerContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
-} else {
-showToast('❌ ' + data.message, 'error', 5000);
+function toDateString(dateInput) {
+  if (!dateInput) return '';
+  const date = new Date(dateInput);
+  if (isNaN(date.getTime())) return '';
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 }
-})
-.catch(error => {
-console.error('Error:', error);
-showToast('❌ ' + error.message, 'error', 5000);
-})
-.finally(() => {
-btn.innerHTML = originalText;
-btn.disabled = false;
-});
-};
-if (logoInputKiri.files && logoInputKiri.files[0]) {
-const reader = new FileReader();
-reader.onload = function(e) {
-logoBase64Kiri = e.target.result.split(',')[1];
-checkAndSend();
-};
-reader.readAsDataURL(logoInputKiri.files[0]);
-} else {
-checkAndSend();
+function toTimeString(timeInput) {
+  if (!timeInput) return '';
+  const match = String(timeInput).trim().match(/(\d{1,2}):(\d{2})/);
+  if (match) return match[1].padStart(2,'0') + ':' + match[2];
+  return '';
 }
-function checkAndSend() {
-if (logoInputKanan.files && logoInputKanan.files[0]) {
-const readerKanan = new FileReader();
-readerKanan.onload = function(e) {
-logoBase64Kanan = e.target.result.split(',')[1];
-processAndSend();
-};
-readerKanan.readAsDataURL(logoInputKanan.files[0]);
-} else {
-processAndSend();
+
+// Fungsi utama: Cari kasus berdasarkan NIS
+function searchCaseByNIS() {
+  const nis = document.getElementById('inputEditNIS').value.trim();
+  if (!nis) { showToast('⚠️ NIS Siswa harus diisi.', 'error'); return; }
+  const resultDiv = document.getElementById('editCaseResult');
+  resultDiv.innerHTML = '<div style="padding:1rem; text-align:center; color:#666;">⏳ Mencari data kasus berdasarkan NIS...</div>';
+
+  fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'getCase', nis: nis }) })
+  .then(res => res.text())
+  .then(text => {
+    let data; try { data = JSON.parse(text); } catch (e) { throw new Error('Respon server tidak valid.'); }
+    if (data.status === 'success') {
+      if (data.totalMatches === 0) {
+        resultDiv.innerHTML = `<div class="edit-info-box"><strong>ℹ️ Data tidak ditemukan</strong><br>Tidak ada kasus dengan <strong>NIS "${nis}"</strong> di sheet Riwayat.<br><br><small>💡 Pastikan NIS yang dimasukkan benar, atau tambahkan kasus baru melalui form utama di atas.</small></div>`;
+        currentEditMatches = [];
+        currentEditStudentInfo = null;
+        currentDuplicateDates = [];
+      } else {
+        currentEditMatches = data.matches;
+        currentEditStudentInfo = data.studentInfo;
+        currentDuplicateDates = data.duplicateDates || [];
+        displayCaseListByNIS(data.matches, data.studentInfo, data.duplicateDates || []);
+      }
+    } else {
+      resultDiv.innerHTML = `<div class="edit-error-box">❌ ${data.message}</div>`;
+    }
+  })
+  .catch(err => {
+    console.error('Error:', err);
+    resultDiv.innerHTML = `<div class="edit-error-box">❌ Gagal terhubung: ${err.message}</div>`;
+  });
 }
+
+// Tampilkan list semua kasus siswa berdasarkan NIS + indikator duplikat
+function displayCaseListByNIS(matches, studentInfo, duplicateDates) {
+  const resultDiv = document.getElementById('editCaseResult');
+  let html = '';
+
+  // Info siswa
+  if (studentInfo) {
+    html += `<div class="student-summary-box"><strong>👤 Data Siswa:</strong> ${studentInfo.namaSiswa} &nbsp;|&nbsp; <strong>🔢 NIS:</strong> ${studentInfo.nis || '-'} &nbsp;|&nbsp; <strong>🔢 NISN:</strong> ${studentInfo.nisn || '-'} &nbsp;|&nbsp; <strong>🏫 Kelas:</strong> ${studentInfo.kelas || '-'}<br><small>📊 Total kasus ditemukan: <strong>${matches.length}</strong></small></div>`;
+  }
+
+  // ⭐ Peringatan duplikat tanggal
+  if (duplicateDates && duplicateDates.length > 0) {
+    html += `<div class="duplicate-warning-box"><strong>⚠️ PERINGATAN: Ditemukan kasus dengan tanggal sama (duplikat)</strong><br><small>Kasus yang ditandai <span style="background:#f1c40f; color:#fff; padding:1px 6px; border-radius:8px; font-weight:600;">kuning</span> adalah kasus duplikat tanggal. Silakan <strong>hapus salah satunya</strong> agar tidak membingungkan.</small><ul>`;
+    duplicateDates.forEach(d => {
+      html += `<li>📅 <strong>${d.tanggalDisplay}</strong> — ada <strong>${d.count} kasus</strong> dengan tanggal yang sama</li>`;
+    });
+    html += `</ul></div>`;
+  }
+
+  html += `<div style="margin-bottom:10px;"><strong>📋 Daftar Kasus — Pilih aksi untuk setiap kasus:</strong></div>`;
+
+  // Buat map untuk cek apakah kasus ini termasuk duplikat
+  const duplicateRowSet = new Set();
+  if (duplicateDates) {
+    duplicateDates.forEach(d => {
+      d.rowIndexes.forEach(ri => duplicateRowSet.add(ri));
+    });
+  }
+
+  matches.forEach((m, idx) => {
+    const tanggal = formatTanggalDisplay(m.tanggalKejadian);
+    const isDuplicate = duplicateRowSet.has(m.rowIndex);
+    const duplicateClass = isDuplicate ? 'duplicate' : '';
+    const duplicateBadge = isDuplicate ? '<span class="duplicate-badge">⚠️ TANGGAL SAMA</span>' : '';
+
+    html += `
+      <div class="edit-match-item ${duplicateClass}">
+        <div class="edit-match-content" onclick="displayEditForm(currentEditMatches[${idx}])">
+          <strong>📅 ${tanggal}</strong> ${duplicateBadge} &nbsp;|&nbsp;
+          <span>Kasus #${m.noKasus}</span> &nbsp;|&nbsp;
+          <span>Kelas: ${m.kelas || '-'}</span>
+          <br><small style="color:#666;">📍 Tempat: ${m.tempatKejadian || '-'} | ⏰ Waktu: ${m.waktuKejadian || '-'}</small>
+          <br><small style="color:#666;">📝 Uraian: ${(m.uraianKejadian || '-').substring(0, 80)}${(m.uraianKejadian || '').length > 80 ? '...' : ''}</small>
+        </div>
+        <div class="edit-match-actions">
+          <button class="btn-match-edit" onclick="displayEditForm(currentEditMatches[${idx}])" title="Edit kasus ini">✏️ Edit</button>
+          <button class="btn-match-delete" onclick="deleteCaseByIndex(${m.rowIndex}, '${escapeHtml(tanggal)}')" title="Hapus kasus ini">🗑️ Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+
+  resultDiv.innerHTML = html;
 }
+
+// Tampilkan form edit untuk kasus yang dipilih
+function displayEditForm(caseData) {
+  const resultDiv = document.getElementById('editCaseResult');
+  const html = `
+    <div class="edit-form-container">
+      <h5>📝 Edit Kasus #${caseData.noKasus} — ${caseData.namaSiswa}</h5>
+      <small style="color:#666;">Tanggal Asli: <strong>${formatTanggalDisplay(caseData.tanggalKejadian)}</strong> &nbsp;|&nbsp; Row Index: ${caseData.rowIndex} &nbsp;|&nbsp; NIS: ${caseData.nis || '-'}</small>
+      <div class="edit-form-grid">
+        <div><label>📅 Tanggal Kejadian:</label><input type="date" id="editFieldTanggal" value="${toDateString(caseData.tanggalKejadian)}"></div>
+        <div><label>⏰ Waktu Kejadian:</label><input type="time" id="editFieldWaktu" value="${toTimeString(caseData.waktuKejadian)}"></div>
+        <div><label>🔢 NIS:</label><input type="text" id="editFieldNIS" value="${escapeHtml(caseData.nis)}"></div>
+        <div><label>🔢 NISN:</label><input type="text" id="editFieldNISN" value="${escapeHtml(caseData.nisn)}"></div>
+        <div><label>👤 Nama Siswa:</label><input type="text" id="editFieldNama" value="${escapeHtml(caseData.namaSiswa)}"></div>
+        <div><label>⚧ Jenis Kelamin:</label><select id="editFieldJK"><option value="">Pilih</option><option value="L" ${caseData.jenisKelamin==='L'?'selected':''}>Laki-laki</option><option value="P" ${caseData.jenisKelamin==='P'?'selected':''}>Perempuan</option></select></div>
+        <div><label>🏫 Kelas:</label><input type="text" id="editFieldKelas" value="${escapeHtml(caseData.kelas)}"></div>
+        <div><label>📍 Tempat Kejadian:</label><input type="text" id="editFieldTempat" value="${escapeHtml(caseData.tempatKejadian)}"></div>
+        <div class="edit-field-full"><label>📝 Uraian Kejadian (Fakta):</label><textarea id="editFieldUraian" rows="3">${escapeHtml(caseData.uraianKejadian)}</textarea></div>
+        <div class="edit-field-full"><label>👥 Subjek Terlibat:</label><input type="text" id="editFieldSubjek" value="${escapeHtml(caseData.subjekTerlibat)}"></div>
+        <div class="edit-field-full"><label>🔍 Analisis Singkat Konselor:</label><textarea id="editFieldAnalisis" rows="2">${escapeHtml(caseData.analisisSingkat)}</textarea></div>
+        <div class="edit-field-full"><label>🛠️ Bentuk Penanganan:</label><textarea id="editFieldPenanganan" rows="2">${escapeHtml(caseData.bentukPenanganan)}</textarea></div>
+        <div class="edit-field-full"><label>➡️ Tindak Lanjut:</label><textarea id="editFieldTindakLanjut" rows="2">${escapeHtml(caseData.tindakLanjut)}</textarea></div>
+        <div class="edit-field-full"><label>📌 Catatan Tambahan:</label><textarea id="editFieldCatatan" rows="2">${escapeHtml(caseData.catatanTambahan)}</textarea></div>
+        <div class="edit-field-full"><label>👨‍👩‍👧 Nama Orang Tua / Wali:</label><input type="text" id="editFieldOrtu" value="${escapeHtml(caseData.namaOrangTua)}"></div>
+      </div>
+      <div class="edit-form-actions">
+        <button class="btn-edit-cancel" onclick="backToCaseList()">⬅️ Kembali ke List</button>
+        <button class="btn-edit-save" onclick="saveEditedCase(${caseData.rowIndex})">💾 Simpan Edit</button>
+      </div>
+    </div>
+  `;
+  resultDiv.innerHTML = html;
+  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-function printPDF() {
-if (!currentPDFUrl) { showToast('⚠️ Belum ada PDF yang dimuat.', 'error'); return; }
-const printWindow = window.open(currentPDFUrl, '_blank');
-if (!printWindow) { showToast('⚠️ Popup diblokir. Izinkan popup untuk situs ini.', 'error', 5000); return; }
-showToast('🖨️ PDF dibuka di tab baru. Tekan Ctrl+P (atau Cmd+P di Mac) untuk mencetak.', 'info', 6000);
+
+function escapeHtml(str) { if (str === null || str === undefined) return ''; return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
+
+// Kembali ke list kasus
+function backToCaseList() {
+  if (currentEditMatches.length > 0 && currentEditStudentInfo) {
+    displayCaseListByNIS(currentEditMatches, currentEditStudentInfo, currentDuplicateDates);
+  } else {
+    document.getElementById('editCaseResult').innerHTML = '';
+  }
 }
-function openPDFNewTab() {
-if (!currentPDFUrl) { showToast('⚠️ Belum ada PDF yang dimuat.', 'error'); return; }
-window.open(currentPDFUrl, '_blank');
+
+// ⭐ BARU: Hapus 1 kasus spesifik
+function deleteCaseByIndex(rowIndex, tanggalDisplay) {
+  const confirmMsg = `⚠️ KONFIRMASI HAPUS KASUS\n\n` +
+    `📅 Tanggal Kasus: ${tanggalDisplay}\n` +
+    `🔢 Row Index: ${rowIndex}\n\n` +
+    `AKSI YANG AKAN DILAKUKAN:\n` +
+    `• Kasus ini akan DIHAPUS PERMANEN dari sheet "Riwayat Kasus"\n` +
+    `• Data lama di "Catatan Kasus" → dipindah ke "Riwayat Kasus 1"\n` +
+    `• PDF LAMA → Trash Google Drive\n` +
+    `• PDF BARU akan dibuat HANYA dengan kasus-kasus TERSISA\n` +
+    `• Kasus yang dihapus TIDAK akan muncul di PDF baru\n\n` +
+    `Lanjutkan?`;
+
+  if (!confirm(confirmMsg)) return;
+
+  const resultDiv = document.getElementById('editCaseResult');
+  resultDiv.innerHTML = '<div style="padding:1.5rem; text-align:center; background:#f8d7da; border-radius:8px;"><h4 style="color:#721c24;">⏳ Menghapus kasus & membuat PDF baru...</h4><p style="color:#721c24;">Mohon tunggu.</p></div>';
+
+  fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'deleteCase', rowIndex: rowIndex }) })
+  .then(res => res.text())
+  .then(text => {
+    let resp; try { resp = JSON.parse(text); } catch (e) { throw new Error('Respon server tidak valid.'); }
+    if (resp.status === 'success') {
+      let successHtml = `
+        <div class="edit-success-box">
+          <strong>✅ Kasus berhasil dihapus!</strong><br><br>
+          📅 Kasus tanggal <strong>${resp.tanggalDihapus}</strong> telah dihapus permanen<br>
+          📂 Data lama di Catatan Kasus → <strong>Riwayat Kasus 1</strong><br>
+          🗑️ PDF lama → <strong>Trash Google Drive</strong><br>
+          📄 PDF baru dibuat dengan <strong>${resp.totalKasusTersisa} kasus tersisa</strong><br>
+          🔗 Link PDF baru terekap di Catatan Kasus (1 baris aktif)<br><br>
+          <strong>👤 Siswa:</strong> ${resp.namaSiswa}
+          ${resp.nis ? `<br><strong>🔢 NIS:</strong> ${resp.nis}` : ''}
+      `;
+
+      if (resp.totalKasusTersisa > 0 && resp.pdfUrl) {
+        successHtml += `<br><br><a href="${resp.pdfUrl}" target="_blank">📄 Buka PDF Baru di Tab Baru</a>`;
+
+        // Tampilkan PDF baru di viewer
+        currentPDFUrl = resp.pdfUrl;
+        currentPDFFileName = `REKAP_${resp.namaSiswa}.pdf`;
+        const embedUrl = getDriveEmbedUrl(resp.pdfUrl);
+        document.getElementById('pdfViewer').src = embedUrl;
+        document.getElementById('pdfTitle').innerHTML = `Rekap Setelah Hapus: ${resp.namaSiswa} <span class="pdf-source-badge baru">🆕 ${resp.totalKasusTersisa} Kasus</span>`;
+        document.getElementById('pdfInfo').innerHTML = `<strong>👤 Nama Siswa:</strong> ${resp.namaSiswa} &nbsp;|&nbsp; <strong>📊 Total Kasus:</strong> ${resp.totalKasusTersisa} pelanggaran`;
+        document.getElementById('btnDownloadPDF').setAttribute('data-url', resp.pdfUrl);
+        document.getElementById('pdfViewerContainer').classList.add('active');
+      } else {
+        successHtml += `<br><br><em style="color:#856404;">ℹ️ Tidak ada kasus tersisa untuk siswa ini. PDF tidak dibuat.</em>`;
+      }
+      successHtml += `</div>`;
+
+      resultDiv.innerHTML = successHtml;
+      showToast('✅ Kasus berhasil dihapus & PDF baru dibuat!', 'success', 5000);
+
+      // Refresh list kasus
+      searchCaseByNIS();
+    } else {
+      resultDiv.innerHTML = `<div class="edit-error-box">❌ ${resp.message}</div>`;
+      showToast('❌ ' + resp.message, 'error', 5000);
+    }
+  })
+  .catch(err => {
+    console.error('Error:', err);
+    resultDiv.innerHTML = `<div class="edit-error-box">❌ Gagal terhubung: ${err.message}</div>`;
+    showToast('❌ Gagal terhubung: ' + err.message, 'error', 5000);
+  });
 }
-function downloadPDF() {
-if (!currentPDFUrl) { showToast('⚠️ Belum ada PDF yang dimuat.', 'error'); return; }
-const link = document.createElement('a');
-link.href = currentPDFUrl;
-link.target = '_blank';
-link.download = currentPDFFileName || 'rekap.pdf';
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
-showToast('📥 Download dimulai...', 'success', 2500);
+
+// Simpan hasil edit
+function saveEditedCase(rowIndex) {
+  const data = {
+    tanggal: document.getElementById('editFieldTanggal').value,
+    waktu: document.getElementById('editFieldWaktu').value,
+    nis: document.getElementById('editFieldNIS').value.trim(),
+    nisn: document.getElementById('editFieldNISN').value.trim(),
+    namaSiswa: document.getElementById('editFieldNama').value.trim(),
+    jenisKelamin: document.getElementById('editFieldJK').value,
+    kelas: document.getElementById('editFieldKelas').value.trim(),
+    tempat: document.getElementById('editFieldTempat').value.trim(),
+    uraian: document.getElementById('editFieldUraian').value.trim(),
+    subjek: document.getElementById('editFieldSubjek').value.trim(),
+    analisis: document.getElementById('editFieldAnalisis').value.trim(),
+    penanganan: document.getElementById('editFieldPenanganan').value.trim(),
+    tindakLanjut: document.getElementById('editFieldTindakLanjut').value.trim(),
+    catatan: document.getElementById('editFieldCatatan').value.trim(),
+    namaOrtu: document.getElementById('editFieldOrtu').value.trim()
+  };
+  if (!data.namaSiswa) { showToast('⚠️ Nama Siswa harus diisi.', 'error'); return; }
+  const confirmMsg = `⚠️ KONFIRMASI SIMPAN EDIT:\n\n• Data kasus di sheet "Riwayat Kasus" akan diupdate.\n• Data lama di "Catatan Kasus" → dipindah ke "Riwayat Kasus 1".\n• PDF LAMA akan dipindahkan ke Trash Google Drive.\n• PDF BARU akan dibuat berisi SEMUA kasus siswa ini.\n• Link PDF baru otomatis terekap di "Catatan Kasus" (1 baris aktif).\n\nLanjutkan?`;
+  if (!confirm(confirmMsg)) return;
+  const resultDiv = document.getElementById('editCaseResult');
+  resultDiv.innerHTML = '<div style="padding:1.5rem; text-align:center; background:#eaf2f8; border-radius:8px;"><h4 style="color:#2c3e50;">⏳ Menyimpan perubahan...</h4><p style="color:#666;">Mohon tunggu, sedang memproses PDF baru dan arsip data.</p></div>';
+  fetch(WEB_APP_URL, { method: 'POST', mode: 'cors', body: JSON.stringify({ action: 'updateCase', rowIndex: rowIndex, data: data }) })
+  .then(res => res.text())
+  .then(text => {
+    let resp; try { resp = JSON.parse(text); } catch (e) { throw new Error('Respon server tidak valid.'); }
+    if (resp.status === 'success') {
+      resultDiv.innerHTML = `
+        <div class="edit-success-box">
+          <strong>✅ Kasus berhasil diupdate!</strong><br><br>
+          • 📂 Data lama di Catatan Kasus → dipindah ke <strong>Riwayat Kasus 1</strong><br>
+          • 🗑️ PDF lama → <strong>Trash Google Drive</strong><br>
+          • 📄 PDF baru dibuat dengan <strong>${resp.totalKasus} kasus</strong><br>
+          • 🔗 Link PDF baru terekap di Catatan Kasus (1 baris aktif)<br><br>
+          <strong>👤 Siswa:</strong> ${resp.namaSiswa}
+          ${resp.nis ? `<br><strong>🔢 NIS:</strong> ${resp.nis}` : ''}
+          ${resp.nisn ? `<br><strong>🔢 NISN:</strong> ${resp.nisn}` : ''}
+          <br><br>
+          <a href="${resp.pdfUrl}" target="_blank">📄 Buka PDF Baru di Tab Baru</a>
+        </div>
+      `;
+      showToast('✅ Kasus berhasil diupdate & PDF baru dibuat!', 'success', 5000);
+      currentPDFUrl = resp.pdfUrl; currentPDFFileName = `REKAP_${resp.namaSiswa}.pdf`;
+      const embedUrl = getDriveEmbedUrl(resp.pdfUrl);
+      document.getElementById('pdfViewer').src = embedUrl;
+      document.getElementById('pdfTitle').innerHTML = `Rekap Setelah Edit: ${resp.namaSiswa} <span class="pdf-source-badge baru">🆕 Baru Diupdate</span>`;
+      document.getElementById('pdfInfo').innerHTML = `<strong>👤 Nama Siswa:</strong> ${resp.namaSiswa} &nbsp;|&nbsp; <strong>📊 Total Kasus:</strong> ${resp.totalKasus} pelanggaran`;
+      document.getElementById('btnDownloadPDF').setAttribute('data-url', resp.pdfUrl);
+      document.getElementById('pdfViewerContainer').classList.add('active');
+      currentEditMatches = [];
+      currentEditStudentInfo = null;
+      currentDuplicateDates = [];
+    } else { resultDiv.innerHTML = `<div class="edit-error-box">❌ ${resp.message}</div>`; showToast('❌ ' + resp.message, 'error', 5000); }
+  })
+  .catch(err => { console.error('Error:', err); resultDiv.innerHTML = `<div class="edit-error-box">❌ Gagal terhubung: ${err.message}</div>`; showToast('❌ Gagal terhubung: ' + err.message, 'error', 5000); });
 }
-document.getElementById('inputNISGuruBK').addEventListener('keypress', function(e) {
-if (e.key === 'Enter') generatePDFGuruBK();
-});
-document.getElementById('inputNISNGuruBK').addEventListener('keypress', function(e) {
-if (e.key === 'Enter') generatePDFGuruBK();
-});
-document.getElementById('inputPasswordGuruBK').addEventListener('keypress', function(e) {
-if (e.key === 'Enter') loginGuruBK();
-});
-document.getElementById('gurubkLoginModal').addEventListener('click', function(e) {
-if (e.target === this) closeGuruBKLogin();
-});
+
+// ============================================
+// ⚡ EVENT LISTENER
+// ============================================
+document.getElementById('inputNISGuruBK').addEventListener('keypress', function(e) { if (e.key === 'Enter') generatePDFGuruBK(); });
+document.getElementById('inputNISNGuruBK').addEventListener('keypress', function(e) { if (e.key === 'Enter') generatePDFGuruBK(); });
+document.getElementById('inputPasswordGuruBK').addEventListener('keypress', function(e) { if (e.key === 'Enter') loginGuruBK(); });
+document.getElementById('inputEditNIS').addEventListener('keypress', function(e) { if (e.key === 'Enter') searchCaseByNIS(); });
+document.getElementById('gurubkLoginModal').addEventListener('click', function(e) { if (e.target === this) closeGuruBKLogin(); });
 </script>
 </body>
 </html>

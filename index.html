@@ -387,7 +387,7 @@ footer { text-align: center; padding: 1.5rem; color: #7f8c8d; font-size: 0.9rem;
           <td><input type="text" placeholder="NISN"></td>
           <td><input type="text" placeholder="Nama Lengkap"></td>
           <td><select><option value="">Pilih</option><option value="L">L</option><option value="P">P</option></select></td>
-          <td><select><option value="">Pilih Kelas</option><option value="IX-C">IX-C</option></select></td>
+          <td><select><option value="">Pilih Kelas</option><option value="IX-I">IX-I</option></select></td>
           <td><input type="time"></td>
           <td><input type="text" placeholder="Contoh: Kelas"></td>
           <td><textarea placeholder="Deskripsikan kejadian..."></textarea></td>
@@ -1019,5 +1019,298 @@ document.getElementById('inputPasswordGuruBK').addEventListener('keypress', func
 document.getElementById('inputEditNIS').addEventListener('keypress', function(e) { if (e.key === 'Enter') searchCaseByNIS(); });
 document.getElementById('gurubkLoginModal').addEventListener('click', function(e) { if (e.target === this) closeGuruBKLogin(); });
 </script>
+<!-- ============================================= -->
+<!-- ⭐ PATCH UNIVERSAL KEPSEK v2 (SELF-CONTAINED) -->
+<!-- ============================================= -->
+<script>
+(function () {
+  // ---------- 1. BERSIHKAN PATCH LAMA (hindari duplikat) ----------
+  ['kepsekPanel', 'kepsekLoginModal', 'kepsekButtonU'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.remove();
+  });
+
+  // ---------- 2. CSS KHUSUS (pakai !important agar tidak tertimpa) ----------
+  var style = document.createElement('style');
+  style.id = 'kepsekUStyle';
+  style.textContent = `
+    #kepsekButtonU{background:linear-gradient(135deg,#c0392b,#e74c3c)!important;
+      color:#fff!important;border:none!important;cursor:pointer;font-weight:700;
+      padding:.7rem 1.2rem;border-radius:8px;font-size:.95rem;margin:4px}
+    #kepsekPanel{display:none!important;background:#fff;border:2px solid #c0392b;
+      border-radius:12px;padding:1.5rem;margin:1.5rem auto;max-width:1200px;
+      box-shadow:0 4px 18px rgba(192,57,43,.18);width:calc(100% - 2rem)}
+    #kepsekPanel.kepsek-visible{display:block!important}
+    #kepsekLoginModal{display:none;position:fixed;inset:0;z-index:99999;
+      background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:1rem}
+    #kepsekLoginModal.kepsek-visible{display:flex!important}
+    .ks-box{background:#fff;border-top:5px solid #c0392b;border-radius:12px;
+      padding:1.7rem;max-width:440px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+    .ks-box h2{color:#c0392b;margin:0 0 .7rem;font-size:1.25rem}
+    .ks-box p{color:#555;font-size:.9rem;line-height:1.6}
+    .ks-box label{display:block;font-weight:700;margin:.8rem 0 .4rem;color:#333}
+    .ks-box input{width:100%;box-sizing:border-box;padding:.7rem;
+      border:1px solid #ccc;border-radius:6px;font-size:1rem}
+    .ks-hint{background:#fdf2f2;border-left:4px solid #c0392b;padding:.8rem;
+      margin:1rem 0;font-size:.8rem;color:#721c24;border-radius:0 6px 6px 0}
+    .ks-actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem}
+    .ks-actions button{border:none;border-radius:6px;padding:.65rem 1.1rem;
+      cursor:pointer;font-weight:700}
+    .ks-cancel{background:#eee;color:#333}
+    .ks-login{background:#c0392b;color:#fff}
+    .ks-header{display:flex;justify-content:space-between;align-items:center;
+      border-bottom:2px solid #c0392b;padding-bottom:.8rem;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+    .ks-header h2{color:#c0392b;margin:0;font-size:1.2rem}
+    .ks-ctrl{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;
+      background:#f9f9f9;padding:1rem;border-radius:8px;margin-bottom:1rem}
+    .ks-ctrl .ks-field{flex:1;min-width:200px}
+    .ks-ctrl label{display:block;font-weight:700;font-size:.85rem;margin-bottom:5px}
+    .ks-ctrl input{width:100%;padding:.6rem;border:1px solid #ccc;border-radius:6px}
+    .ks-ctrl button{background:#c0392b;color:#fff;border:none;border-radius:6px;
+      padding:.65rem 1rem;cursor:pointer;font-weight:700}
+    #pdfViewerContainerKepsek{display:none;margin-top:1rem}
+    #pdfViewerContainerKepsek.kepsek-visible{display:block}
+    .ks-pdfhead{background:#c0392b;color:#fff;padding:.8rem;border-radius:8px 8px 0 0;
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+    .ks-pdfhead button{background:#fff;color:#c0392b;border:none;border-radius:5px;
+      padding:.4rem .7rem;margin-left:4px;cursor:pointer;font-weight:700}
+    #pdfInfoKepsek{padding:.8rem;font-size:.9rem;background:#fdf2f2;border-radius:0 0 8px 8px}
+    .ks-logout{background:#333;color:#fff;border:none;border-radius:6px;
+      padding:.5rem .9rem;cursor:pointer}
+  `;
+  document.head.appendChild(style);
+
+  // ---------- 3. STATE ----------
+  var loggedIn = false, pdfUrl = '', pdfName = '';
+
+  // ---------- 4. BUAT TOMBOL DI TOOLBAR ----------
+  var btn = document.createElement('button');
+  btn.id = 'kepsekButtonU';
+  btn.type = 'button';
+  btn.textContent = '👨‍💼 Kepsek';
+  btn.title = 'Login Kepala Sekolah';
+  btn.addEventListener('click', openPanel);
+
+  var guruBtn = Array.prototype.find.call(
+    document.querySelectorAll('button'),
+    function (b) { return /guru\s*bk/i.test(b.textContent); }
+  );
+  if (guruBtn && guruBtn.parentNode) {
+    guruBtn.parentNode.insertBefore(btn, guruBtn.nextSibling);
+  } else {
+    var tb = document.querySelector('.toolbar') || document.body;
+    tb.appendChild(btn);
+  }
+
+  // ---------- 5. BUAT PANEL (langsung ke body, bukan nested) ----------
+  var panel = document.createElement('div');
+  panel.id = 'kepsekPanel';
+  panel.innerHTML = `
+    <div class="ks-header">
+      <h2>👨‍ Mode Kepala Sekolah <span style="font-size:.7rem;background:#c0392b;color:#fff;
+        padding:3px 9px;border-radius:10px">AKTIF</span></h2>
+      <button type="button" class="ks-logout" id="btnLogoutKepsekU">🚪 Logout</button>
+    </div>
+    <div class="ks-hint"><strong>🔐 Akses Kepala Sekolah Aktif</strong><br>
+      <small>Lihat rekapitulasi pelanggaran siswa, cetak & unduh PDF laporan.</small></div>
+    <div class="ks-ctrl">
+      <div class="ks-field"><label for="inputNISKepsek">🔍 NIS Siswa</label>
+        <input type="text" id="inputNISKepsek" placeholder="Contoh: 12345"></div>
+      <div class="ks-field"><label for="inputNISNKepsek">🔍 NISN Siswa</label>
+        <input type="text" id="inputNISNKepsek" placeholder="Contoh: 0012345678"></div>
+      <button type="button" id="btnGenerateKepsek">📄 Tampilkan Laporan PDF</button>
+    </div>
+    <div id="pdfViewerContainerKepsek">
+      <div class="ks-pdfhead">
+        <strong id="pdfTitleKepsek">Laporan Rekapitulasi Pelanggaran</strong>
+        <div>
+          <button type="button" id="ksPrint">🖨️ Cetak</button>
+          <button type="button" id="ksNewTab">🔗 Tab Baru</button>
+          <button type="button" id="ksDownload">📥 Download</button>
+        </div>
+      </div>
+      <iframe id="pdfViewerKepsek" title="PDF Kepsek"
+        style="width:100%;height:700px;border:0;background:#525659"></iframe>
+      <div id="pdfInfoKepsek"></div>
+    </div>`;
+
+  // Tempel tepat setelah panel Guru BK jika ada, kalau tidak -> akhir body
+  var guruPanel = document.getElementById('gurubkPanel');
+  if (guruPanel && guruPanel.parentNode) guruPanel.parentNode.insertBefore(panel, guruPanel.nextSibling);
+  else document.body.appendChild(panel);
+
+  // ---------- 6. BUAT MODAL LOGIN ----------
+  var modal = document.createElement('div');
+  modal.id = 'kepsekLoginModal';
+  modal.innerHTML = `
+    <div class="ks-box">
+      <h2>🔐 Login Kepala Sekolah</h2>
+      <p>Masukkan password untuk mengakses laporan rekapitulasi pelanggaran siswa.</p>
+      <label for="inputPasswordKepsek">Password:</label>
+      <input type="password" id="inputPasswordKepsek" placeholder="Masukkan password" autocomplete="off">
+      <div class="ks-hint"><strong>💡 Lupa Password?</strong><br>
+        Edit di <strong>Google Spreadsheet → sheet "Pengaturan" → baris "passwordKepsek" → kolom B</strong>.
+        Berlaku langsung tanpa deploy.</div>
+      <div class="ks-actions">
+        <button type="button" class="ks-cancel" id="ksCancel">Batal</button>
+        <button type="button" class="ks-login" id="btnLoginKepsek">🔓 Login</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+
+  // ---------- 7. HELPER ----------
+  function toast(msg, type) {
+    if (typeof window.showToast === 'function') window.showToast(msg, type || 'info', 4000);
+    else alert(msg);
+  }
+  function showPanel() {
+    var p = document.getElementById('kepsekPanel');
+    if (!p) { toast('❌ Panel Kepsek tidak ditemukan.', 'error'); return; }
+    p.classList.add('kepsek-visible');
+    p.style.display = 'block';           // ← jaminan ganda, tidak bergantung CSS
+    p.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function showLogin() {
+    var m = document.getElementById('kepsekLoginModal');
+    m.classList.add('kepsek-visible');
+    m.style.display = 'flex';
+    document.getElementById('inputPasswordKepsek').value = '';
+    setTimeout(function () { document.getElementById('inputPasswordKepsek').focus(); }, 80);
+  }
+  function hideLogin() {
+    var m = document.getElementById('kepsekLoginModal');
+    m.classList.remove('kepsek-visible');
+    m.style.display = 'none';
+    document.getElementById('inputPasswordKepsek').value = '';
+  }
+
+  // ---------- 8. FUNGSI UTAMA ----------
+  function openPanel() {
+    if (loggedIn) { showPanel(); return; }
+    showLogin();
+  }
+
+  function doLogin() {
+    var pwd = document.getElementById('inputPasswordKepsek').value;
+    if (!pwd) { toast('⚠️ Password tidak boleh kosong.', 'error'); return; }
+    var b = document.getElementById('btnLoginKepsek');
+    b.disabled = true; b.textContent = '⏳ Memverifikasi...';
+
+    fetch(WEB_APP_URL, {
+      method: 'POST', mode: 'cors',
+      body: JSON.stringify({ action: 'loginKepsek', password: pwd })
+    })
+      .then(function (r) { return r.text(); })
+      .then(function (t) {
+        var d; try { d = JSON.parse(t.trim()); } catch (e) { throw new Error('Response bukan JSON'); }
+        if (d.status === 'success') {
+          loggedIn = true;
+          hideLogin();
+          showPanel();                    // ← dipanggil SETELAH elemen dipastikan ada
+          toast('✅ Login Kepala Sekolah berhasil!', 'success');
+        } else {
+          toast('❌ Password salah!', 'error');
+          document.getElementById('inputPasswordKepsek').focus();
+        }
+      })
+      .catch(function (e) { toast('❌ Gagal terhubung: ' + e.message, 'error'); })
+      .finally(function () { b.disabled = false; b.textContent = '🔓 Login'; });
+  }
+
+  function doLogout() {
+    if (!confirm('Logout dari Mode Kepala Sekolah?')) return;
+    loggedIn = false; pdfUrl = ''; pdfName = '';
+    var p = document.getElementById('kepsekPanel');
+    p.classList.remove('kepsek-visible'); p.style.display = 'none';
+    var v = document.getElementById('pdfViewerContainerKepsek');
+    v.classList.remove('kepsek-visible'); v.style.display = 'none';
+    document.getElementById('pdfViewerKepsek').src = '';
+    document.getElementById('inputNISKepsek').value = '';
+    document.getElementById('inputNISNKepsek').value = '';
+    document.getElementById('pdfInfoKepsek').innerHTML = '';
+    toast('🚪 Logout berhasil.', 'info');
+  }
+
+  function embedUrl(url) {
+    var m = String(url).match(/\/d\/([a-zA-Z0-9_-]+)/);
+    return m ? 'https://drive.google.com/file/d/' + m[1] + '/preview' : url;
+  }
+  function fileId(url) {
+    var m = String(url).match(/\/d\/([a-zA-Z0-9_-]+)/);
+    return m ? m[1] : '';
+  }
+
+  function generatePDF() {
+    if (!loggedIn) { showLogin(); return; }
+    var nis = document.getElementById('inputNISKepsek').value.trim();
+    var nisn = document.getElementById('inputNISNKepsek').value.trim();
+    if (!nis && !nisn) { toast('⚠️ Isi NIS atau NISN dulu.', 'error'); return; }
+    var b = document.getElementById('btnGenerateKepsek');
+    b.disabled = true; b.textContent = '⏳ Memproses...';
+
+    fetch(WEB_APP_URL, {
+      method: 'POST', mode: 'cors',
+      body: JSON.stringify({ action: 'rekap', nis: nis, nisn: nisn,
+        logoBase64Kiri: '', logoBase64Kanan: '' })
+    })
+      .then(function (r) { return r.text(); })
+      .then(function (t) {
+        var d; try { d = JSON.parse(t.trim()); } catch (e) { throw new Error('Response tidak valid'); }
+        if (d.status === 'success') {
+          pdfUrl = d.pdfUrl; pdfName = d.fileName || 'rekap_kepsek.pdf';
+          document.getElementById('pdfViewerKepsek').src = embedUrl(pdfUrl);
+          document.getElementById('pdfTitleKepsek').textContent =
+            '📄 ' + d.namaSiswa + ' (' + d.kelas + ') — Akses Kepsek';
+          document.getElementById('pdfInfoKepsek').innerHTML =
+            '<strong>👤</strong> ' + d.namaSiswa + ' &nbsp;|&nbsp; <strong>🏫</strong> ' +
+            d.kelas + ' &nbsp;|&nbsp; <strong>📊</strong> ' + d.totalKasus + ' kasus';
+          var v = document.getElementById('pdfViewerContainerKepsek');
+          v.classList.add('kepsek-visible'); v.style.display = 'block';
+          v.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          toast('✅ PDF berhasil dibuat.', 'success');
+        } else toast('❌ ' + d.message, 'error');
+      })
+      .catch(function (e) { toast('❌ ' + e.message, 'error'); })
+      .finally(function () { b.disabled = false; b.textContent = '📄 Tampilkan Laporan PDF'; });
+  }
+
+  // ---------- 9. EVENT LISTENER ----------
+  document.getElementById('btnLoginKepsek').addEventListener('click', doLogin);
+  document.getElementById('ksCancel').addEventListener('click', hideLogin);
+  document.getElementById('btnLogoutKepsekU').addEventListener('click', doLogout);
+  document.getElementById('btnGenerateKepsek').addEventListener('click', generatePDF);
+  document.getElementById('inputPasswordKepsek').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') doLogin();
+  });
+  ['inputNISKepsek', 'inputNISNKepsek'].forEach(function (id) {
+    document.getElementById(id).addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') generatePDF();
+    });
+  });
+  modal.addEventListener('click', function (e) { if (e.target === modal) hideLogin(); });
+
+  document.getElementById('ksNewTab').addEventListener('click', function () {
+    if (pdfUrl) window.open(pdfUrl, '_blank');
+    else toast('⚠️ Belum ada PDF.', 'error');
+  });
+  document.getElementById('ksPrint').addEventListener('click', function () {
+    if (pdfUrl) window.open(pdfUrl, '_blank');
+    else toast('⚠️ Belum ada PDF.', 'error');
+  });
+  document.getElementById('ksDownload').addEventListener('click', function () {
+    if (!pdfUrl) { toast('⚠️ Belum ada PDF.', 'error'); return; }
+    window.open('https://drive.google.com/uc?export=download&id=' + fileId(pdfUrl), '_blank');
+  });
+
+  // ---------- 10. TIMPA FUNGSI LAMA (kompatibel HTML patch sebelumnya) ----------
+  window.openKepsekLogin = openPanel;
+  window.closeKepsekLogin = hideLogin;
+  window.loginKepsek = doLogin;
+  window.logoutKepsek = doLogout;
+  window.generatePDFKepsek = generatePDF;
+  window.cekPanelKepsek = showPanel;
+})();
+</script>
+<!-- ============ AKHIR PATCH KEPSEK v2 ============ -->
 </body>
 </html>
